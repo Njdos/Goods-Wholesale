@@ -9,18 +9,18 @@ import javax.validation.constraints.Size;
 
 @Data
 @Entity
+@Table(name = "goods")
 @NoArgsConstructor
-@Table(name = "message")
-public class Message {
-    
+public class Goods {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "id",unique = true)
     private Long id;
-    
+
     @NotEmpty()
     @Size(max = 255, min = 1)
-    @Column(name = "title")
+    @Column(name = "title",unique = true)
     private String title;
 
     @Column(name = "heading")
@@ -44,17 +44,17 @@ public class Message {
     @Size(max = 2048, min = 1)
     @Column(name = "price")
     private long price;
-
-    @NotEmpty()
-    @Size(max = 2048, min = 1)
+    
+    @NotEmpty(message = "Username cannot be empty")
+    @Size(max = 2048, min = 1, message = "Message too long Or too short")
     @Column(name = "place")
     private String place;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private Long author;
+    private User author;
 
-    public Message(String title, String heading, String description,long price,String place,Long user) {
+    public Goods(String title, String heading, String description, long price, String place, User user) {
         this.title = title;
         this.heading = heading;
         this.description = description;
@@ -62,4 +62,5 @@ public class Message {
         this.place = place;
         this.author = user;
     }
+
 }

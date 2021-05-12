@@ -1,9 +1,9 @@
-package ua.wholesale.web.site.role;
+package ua.wholesale.web.site.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Role implements GrantedAuthority {
-    USER,Seller,ADMIN;
+    USER,SELLER,ADMIN;
 
     @Override
     public String getAuthority() {
