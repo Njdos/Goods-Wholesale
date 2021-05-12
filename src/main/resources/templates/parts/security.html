@@ -1,0 +1,22 @@
+<header th:fragment="security" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<th:body th:if="${Session.SPRING_SECURITY_CONTEXT==true}">
+
+        <div th:with="user=${Session.SPRING_SECURITY_CONTEXT.authentication.principal},
+        name = ${user.getUsername()},
+        isAdmin = ${user.isAdmin()},
+        currentUserId = ${user.getId()},
+        currentUserPhoto = ${user.filenameq}"></div>q
+
+</th:body>
+<th:body th:if="${Session.SPRING_SECURITY_CONTEXT==false}">
+
+        <div th:with="
+        name = 'Pls logout',
+        isAdmin = 'false',
+        currentUserId = '-1',
+        currentUserPhoto = '787b151e-cf99-4bd0-b3a8-bddbdf04b16e.user (2).png'
+        "></div>
+
+</th:body>
+</header>

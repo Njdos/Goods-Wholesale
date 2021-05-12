@@ -1,11 +1,13 @@
 package ua.wholesale.web.site.utils.validator;
 
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ua.wholesale.web.site.model.User;
 
+@Component
 public class UserValidatorImpl implements Validator, UserValidator {
 
     @Override
@@ -25,7 +27,7 @@ public class UserValidatorImpl implements Validator, UserValidator {
         if (user.getPassword().length()<1 || user.getPassword().length()>255){
             errors.rejectValue("password","Size.userForm.password", "User password not validates length(must have < 1  and > 255)");
         }
-        if (user.getConfirm_password().length()<1 || user.getConfirm_password().length()>255){
+        if (user.getPassword2().length()<1 || user.getPassword2().length()>255){
             errors.rejectValue("password2","Size.userForm.password2", "User password2 not validates length(must have < 1  and > 255)");
         }
         if (user.getFirstname().length()<1 || user.getFirstname().length()>255){

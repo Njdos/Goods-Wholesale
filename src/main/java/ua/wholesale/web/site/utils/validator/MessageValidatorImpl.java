@@ -1,11 +1,13 @@
 package ua.wholesale.web.site.utils.validator;
 
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ua.wholesale.web.site.model.Goods;
 
+@Component
 public class MessageValidatorImpl implements Validator, GoodsValidator {
 
     @Override

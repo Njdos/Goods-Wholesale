@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="parts/head :: head"></head>
+<body>
+
+<header th:replace="parts/navbar :: navbar"></header>
+
+<div class="container mt-5">
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <th:block th:each="userss : ${userMess}">
+                <div class="row">
+                    <div class="col">
+                        <div class="card my-3" style="width: 18rem;" >
+                            <img th:src="@{${'/img/' + userss.filenameq}}" class="card-img-top">
+                        </div>
+                    </div>
+                    <div class="col">
+                            <p class="text-center" th:text="${'Firstname: ' + userss.getFirstname()}"></p><br>
+                            <p class="text-center" th:text="${'Lastname: ' + userss.getLastname()}"></p><br>
+                            <p class="text-center" th:text="${'Username: ' + userss.getUsername()}"></p><br>
+                            <p class="text-center" th:text="${'Date: ' + userss.getDate()}"></p><br>
+                    </div>
+                    <div class="col">
+                                <p class="text-center" th:text="${'Email: ' + userss.getEmail()}"></p><br>
+                                <p class="text-center" th:text="${'Phone: ' + userss.getPhone()}"></p><br>
+                                <p class="text-center" th:text="${'Gender: ' + userss.getGender()}"></p><br>
+                                <p class="text-center" th:text="${'All Messages: ' + countMess }"></p><br>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</div>
+
+</div>
+<scripts th:replace="parts/foot :: foot"></scripts>
+</body>
+</html>
+

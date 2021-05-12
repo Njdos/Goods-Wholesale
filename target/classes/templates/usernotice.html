@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="parts/head :: head"></head>
+<body>
+
+<header th:replace="parts/navbar :: navbar"></header>
+
+<div class="container mt-5">
+
+
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <th:block th:each="message : ${messages}">
+                <div class="card-columns">
+                    <div class="card my-3" style="width: 18rem;" >
+                        <img th:src="@{${'/img/' + message.filename}}" class="card-img-top">
+                    </div>
+                    <div class="card my-3" style="width: 18rem;" >
+                        <img th:src="@{${'/img/' + message.filenames}}" class="card-img-top">
+                    </div>
+                    <div class="card my-3" style="width: 18rem;" >
+                        <img th:src="@{${'/img/' + message.filenamesq}}" class="card-img-top">
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <p class="text-center" th:text="${message.title}"></p><br>
+                    <p class="text-center" th:text="${message.heading}"></p><br>
+                    <p class="text-center" th:text="${message.description}"></p><br>
+                    <p class="text-center" th:text="${message.price}"></p><br>
+                    <p class="text-center" th:text="${message.place}"></p><br>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</div>
+
+<form action="/sendSms" method="get" >
+    <th:block th:each="message : ${messages}">
+        <a th:href="@{${'/sendSms/'  + message.getAuthor.getId() }}">Send Sms To Author</a>
+    </th:block>
+</form>
+
+</div>
+<scripts th:replace="parts/foot :: foot"></scripts>
+</body>
+</html>

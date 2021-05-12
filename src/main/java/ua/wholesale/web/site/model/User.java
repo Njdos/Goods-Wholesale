@@ -50,23 +50,24 @@ public class User implements UserDetails {
     @Transient
     @NotEmpty()
     @Size(max = 255, min = 5)
-    private String confirm_password;
+    @Column(name = "password2")
+    private String password2;
 
     @NotEmpty()
     @Email()
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
 
     @NotEmpty()
     @Size(max = 255, min = 1)
-    @Column(name = "phone")
+    @Column(name = "phone",unique = true)
     private String phone;
 
     @Column(name = "gender")
     private String gender;
 
-    @Column(name = "filename_user")
-    private String filename_user;
+    @Column(name = "filenameq")
+    private String filenameq;
 
     @Column(name = "status")
     private boolean status;
@@ -76,6 +77,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "roles")
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Goods> messages;
 
 
     @Override

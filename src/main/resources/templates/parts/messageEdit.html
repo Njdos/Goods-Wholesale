@@ -1,0 +1,75 @@
+    <div th:fragment="messageEdit" xmlns:th="http://www.w3.org/1999/xhtml">
+        <div class="form-group mt-3">
+            <form method="post" enctype="multipart/form-data" action="/user-messages">
+                <div th:each="message : ${message}">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                    <input type="hidden" name="messAutId" th:value="${message.author.getId()}"/>
+                    <input type="hidden" name="id" th:value="${message.getId()}"/>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Title :</label>
+                        <div class="col-sm-6">
+                            <label>
+                                <input type="text" name="title" placeholder="title" th:value="${message} ? ${message.getTitle()} : '' " required/>
+                            </label>
+                            <div th:if="${titleError!=null}" th:text="${titleError}" style="color: red"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Heading :</label>
+                        <div class="col-sm-6">
+                            <label>
+                                <select name="heading" required>
+                                    <option value="Недвижимость">Недвижимость</option>
+                                    <option value="Транспорт" selected>Транспорт</option>
+                                    <option value="Запчасти для транспорта">Запчасти для транспорта</option>
+                                    <option value="Работа">Работа</option>
+                                    <option value="Животные">Животные</option>
+                                    <option value="Дом и сад">Дом и сад</option>
+                                    <option value="Электроника">Электроника</option>
+                                    <option value="Бизнес и услуги">Бизнес и услуги</option>
+                                    <option value="Мода и стиль">Мода и стиль</option>
+                                    <option value="Хобби, отдых и спорт">Хобби, отдых и спорт</option>
+                                    <option value="Отдам даром">Отдам даром</option>
+                                    <option value="Обмен">Обмен</option>
+                                    <option value="Онлайн безопасность">Онлайн безопасность</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Description :</label>
+                        <div class="col-sm-6">
+                            <label>
+                                <input type="text" name="description" placeholder="description" th:value="${message} ? ${message.getDescription()} : '' " required/>
+                            </label>
+                            <div th:if="${descriptionError!=null}" th:text="${descriptionError}" style="color: red"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Price :</label>
+                        <div class="col-sm-6">
+                            <label>
+                                <input type="number"  min="0" name="price" placeholder="price" th:value="${message} ? ${message.getPrice()} : '' " required/>
+                            </label>
+                            <div th:if="${priceError!=null}" th:text="${priceError}" style="color: red"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Place :</label>
+                        <div class="col-sm-6">
+                            <label>
+                                <input type="text" name="place" placeholder="place" th:value="${message} ? ${message.getPlace()} : '' " required/>
+                            </label>
+                            <div th:if="${placeError!=null}" th:text="${placeError}" style="color: red"></div>
+                        </div>
+                    </div>
+                    <input type="file" name="file" required>
+                    <input type="file" name="files" required>
+                    <input type="file" name="filesq" required>
+                    <button type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

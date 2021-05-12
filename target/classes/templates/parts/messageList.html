@@ -1,0 +1,56 @@
+<div th:fragment="messageList" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <style>
+        table {
+            width: 100%;
+        }
+
+        th{
+            text-align: left;
+        }
+        td{
+            text-align: right;
+        }
+    </style>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="card-columns">
+                <div th:each="message : ${messages}">
+                    <a th:href="@{${'/usernotice/'  + message.getId()}}">
+                        <div class="card my-3" style="width: 18rem;" >
+                            <div th:if="${message.filename}">
+                                <img th:src="@{${'/img/' + message.getFilename()}}" class="card-img-top"/>
+                                <div class="m-2" align="center">
+                                    <span th:text="${message.getTitle()}"></span>
+                                </div>
+                                <div class="card-footer text-muted" >
+                                    <table>
+                                        <tr>
+                                            <th th:text="${message.getPrice()} + ' грн'"></th>
+                                            <td th:text="${message.getPlace()}"></td>
+                                        </tr>
+                                    </table>
+                                    <div class="m-2" align="center">
+
+                                        <div th:if="${isCurrentUser}">
+                                            <a class="btn btn-primary" th:href="@{${'/user-messages/' + message.getAuthor.getId() + '?message=' + message.getId()}}">
+                                                Edit
+                                            </a>
+                                            <a class="btn btn-primary" th:href="@{${'/message-delete/' + message.getId()}}">
+                                                Delete
+                                            </a>
+                                        </div>
+                                        <div th:unless="${isCurrentUser}">
+                                            <a th:href="@{${'/user-messages/' + message.getAuthor.getId()}}" th:text="${message.getAuthorName()}"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

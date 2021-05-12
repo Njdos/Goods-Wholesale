@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="parts/head :: head"></head>
+<body>
+
+<header xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <style>
+        .round {
+            vertical-align: middle;
+            width: 50px;
+            height: 50px;
+            border-radius: 40%;
+        }
+    </style>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-body border-bottom shadow-sm">
+        <a href="/main" class="my-0 mr-md-auto font-weight-normal"><h2>Rent UA</h2></a>
+        <a class="p-2 text-dark" href="/main">Головна сторінка</a>
+        <a class="p-2 text-dark" href="/blog/add">Сподобавші</a>
+        <a class="p-2 text-dark" href="/addnotice">Подати Оголошення</a>
+
+        <form action="/logout" method="post" >
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+            <button class="btn btn-primary" type="submit">Sign Out</button>
+        </form>
+
+    </div>
+</header>
+
+<div class="container mt-5">
+
+
+    <div class="mb-1">Add new user</div>
+
+    <form id="userForm" action="/registration" method="post"  enctype="multipart/form-data" >
+        <input type="hidden" name="_csrf"  th:value="${_csrf.token}" />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">User Name :</label>
+            <div class="col-sm-6">
+                <label>
+                    <input type="text" name="username" placeholder="User name" th:value="${user} ? ${user.getUsername()} : '' "/>
+                </label>
+                <div th:if="${usernameError!=null}" th:text="${usernameError}" style="color: red"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Password:</label>
+            <div class="col-sm-6">
+                <label>
+                    <input type="password" name="password" placeholder="Password" th:value="${user} ? ${user.getPassword()} : '' "/>
+                </label>
+                <div th:if="${passwordError!=null}" th:text="${passwordError}" style="color: red"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Password2:</label>
+            <div class="col-sm-6">
+                <label>
+                    <input type="password" name="password2" placeholder="Password2" th:value="${user} ? ${user.getPassword2()} : '' "/>
+                </label>
+                <div th:if="${password2Error!=null}" th:text="${password2Error}" style="color: red"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">User Firstname :</label>
+            <div class="col-sm-6">
+                <label>
+                    <input type="text" name="firstname" placeholder="User Firstname" th:value="${user} ? ${user.getFirstname()} : '' "/>
+                </label>
+                <div th:if="${firstnameError!=null}" th:text="${firstnameError}" style="color: red"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">User Lastname :</label>
+            <div class="col-sm-6">
+                <label>
+                    <input type="text" name="lastname" placeholder="User Lastname" th:value="${user} ? ${user.getLastname()} : '' "/>
+                </label>
+                <div th:if="${lastnameError!=null}" th:text="${lastnameError}" style="color: red"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">User Date of birthday :</label>
+            <div class="col-sm-6">
+                <label>
+                    <input type="date" name="date" placeholder="User date" th:value="${user} ? ${user.getDate()} : '' "/>
+                </label>
+                <div th:if="${dateError!=null}" th:text="${dateError}" style="color: red"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">User Email :</label>
+            <div class="col-sm-6">
+                <label>
+                    <input type="email" name="email" placeholder="User email" th:value="${user} ? ${user.getEmail()} : '' "/>
+                </label>
+                <div th:if="${emailError!=null}" th:text="${emailError}" style="color: red"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">User Phone :</label>
+            <div class="col-sm-6">
+                <label>
+                    <input type="tel" name="phone" placeholder="User phone" title="**-**-**-***" required pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{3}" th:value="${user} ? ${user.getPhone()} : '' "/>
+                </label>
+                <div th:if="${phoneError!=null}" th:text="${phoneError}" style="color: red"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Gender:</label>
+            <div class="col-sm-6">
+                <label>
+                    <select name="gender">
+                        <option value="Man" selected>Man</option>
+                        <option value="Woman">Woman</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Photo:</label>
+            <div class="col-sm-6">
+                <input type="file" name="fileq" required>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+
+</div>
+<scripts th:replace="parts/foot :: foot"></scripts>
+</body>
+</html>

@@ -31,14 +31,14 @@ public class Goods {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "filename_1")
-    private String filename_1;
+    @Column(name = "filename")
+    private String filename;
 
-    @Column(name = "filename_2")
-    private String filename_2;
+    @Column(name = "filenames")
+    private String filenames;
 
-    @Column(name = "filename_3")
-    private String filename_3;
+    @Column(name = "filenamesq")
+    private String filenamesq;
 
     @NotEmpty()
     @Size(max = 2048, min = 1)
@@ -53,6 +53,10 @@ public class Goods {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
+
+    public String getAuthorName() {
+        return author != null ? author.getUsername() : "<none>";
+    }
 
     public Goods(String title, String heading, String description, long price, String place, User user) {
         this.title = title;
