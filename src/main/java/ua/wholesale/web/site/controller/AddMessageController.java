@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ua.wholesale.web.site.model.Goods;
+import ua.wholesale.web.site.model.Role;
 import ua.wholesale.web.site.model.User;
 import ua.wholesale.web.site.service.GoodsService;
 import ua.wholesale.web.site.utils.validator.GoodsValidator;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;

@@ -3,6 +3,7 @@ package ua.wholesale.web.site.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,8 +34,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                     .authorizeRequests()
-                    .antMatchers("/","/greeting","/registration", "/activate/*").permitAll()
-                    .anyRequest().authenticated()
+                    .antMatchers(HttpMethod.GET,"/addnotice").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name(), Role.SELLER.name())
+                    .antMatchers(HttpMethod.POST,"/addnotice").hasAnyAuthority(Role.ADMIN.name(), Role.SELLER.name())
+                    .antMatchers("/** ","/greeting","/registration", "/activate/*").permitAll()
+                    .anyRequest()
+                .authenticated()
                 .and()
                     .formLogin()
                     .loginPage("/login")

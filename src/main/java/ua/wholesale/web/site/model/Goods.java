@@ -15,7 +15,7 @@ public class Goods {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "id",unique = true)
+    @Column(name = "id")
     private Long id;
 
     @NotEmpty()
