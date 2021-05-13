@@ -1,14 +1,19 @@
 package ua.wholesale.web.site.utils.validator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ua.wholesale.web.site.model.User;
+import ua.wholesale.web.site.service.UserService;
 
 @Component
 public class UserValidatorImpl implements Validator, UserValidator {
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -30,6 +35,9 @@ public class UserValidatorImpl implements Validator, UserValidator {
         if (user.getPassword2().length()<1 || user.getPassword2().length()>255){
             errors.rejectValue("password2","Size.userForm.password2", "User password2 not validates length(must have < 1  and > 255)");
         }
+        if (!user.getPassword().equals(user.getPassword2())){
+            errors.rejectValue("password2","Size.userForm.password2", "Confirm Password not equals password");
+        }
         if (user.getFirstname().length()<1 || user.getFirstname().length()>255){
             errors.rejectValue("firstname","Size.userForm.firstname", "User firstname not validates length(must have < 1 and > 255)");
         }
@@ -39,17 +47,34 @@ public class UserValidatorImpl implements Validator, UserValidator {
         if (user.getEmail().length()<1 || user.getEmail().length()>255){
             errors.rejectValue("email","Size.userForm.email", "User email not validates length(must have < 1 and > 255)");
         }
+        if (user.getDate().equals("")){
+            errors.rejectValue("date","Size.userForm.date", "User date cann`t be empty");
+        }
+        if (!userService.searchUserName(user)){
+            errors.rejectValue("username","Size.userForm.username", "User name are used");
+        }
+        if (!userService.searchEmail(user)){
+            errors.rejectValue("email","Size.userForm.email", "Email are used");
+        }
+        if (!userService.searchPhone(user)){
+            errors.rejectValue("phone","Size.userForm.phone", "User phone are used");
+        }
     }
 
     @Override
     public void bindingResultErrors(BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+
             if (bindingResult.hasFieldErrors("username")) {
                 model.addAttribute("usernameError", bindingResult.getFieldError("username").getDefaultMessage());
             }
 
             if (bindingResult.hasFieldErrors("password")) {
                 model.addAttribute("passwordError", bindingResult.getFieldError("password").getDefaultMessage());
+            }
+
+            if (bindingResult.hasFieldErrors("password2")) {
+                model.addAttribute("password2Error", bindingResult.getFieldError("password2").getDefaultMessage());
             }
 
             if (bindingResult.hasFieldErrors("password2")) {
@@ -66,6 +91,14 @@ public class UserValidatorImpl implements Validator, UserValidator {
 
             if (bindingResult.hasFieldErrors("email")) {
                 model.addAttribute("emailError", bindingResult.getFieldError("email").getDefaultMessage());
+            }
+
+            if (bindingResult.hasFieldErrors("phone")) {
+                model.addAttribute("phoneError", bindingResult.getFieldError("phone").getDefaultMessage());
+            }
+
+            if (bindingResult.hasFieldErrors("date")) {
+                model.addAttribute("dateError", bindingResult.getFieldError("date").getDefaultMessage());
             }
         }
     }

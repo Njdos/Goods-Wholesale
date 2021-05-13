@@ -56,9 +56,7 @@ public class OnlyUserMessageController {
     ) throws IOException {
 
         goodsValidator.validate(good, bindingResult);
-
         goodsValidator.bindingResultErrors(bindingResult, model);
-
         good.setAuthor(user);
 
         if (good.getTitle() != null && !good.getTitle().isEmpty() &&

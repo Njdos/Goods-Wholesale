@@ -17,7 +17,7 @@ import ua.wholesale.web.site.service.UserServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
     private UserServiceImpl userServiceImpl;
@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers(HttpMethod.GET,"/addnotice").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name(), Role.SELLER.name())
                     .antMatchers(HttpMethod.POST,"/addnotice").hasAnyAuthority(Role.ADMIN.name(), Role.SELLER.name())
-                    .antMatchers("/** ", "/activate/*").permitAll()
+                    .antMatchers("/** ","/registration", "/activate/*").permitAll()
                     .anyRequest()
                 .authenticated()
                 .and()
@@ -53,6 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userServiceImpl)
                 .passwordEncoder(passwordEncoder);
     }
+
+
 
 
 }

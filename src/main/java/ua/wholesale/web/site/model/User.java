@@ -23,33 +23,33 @@ public class User implements UserDetails {
     private Long id;
 
     @NotEmpty()
-    @Size(max = 255, min = 5)
+    @Size(max = 255, min = 1)
     @Column(name = "firstname")
     private String firstname;
 
     @NotEmpty()
-    @Size(max = 255, min = 5)
+    @Size(max = 255, min = 1)
     @Column(name = "lastname")
     private String lastname;
 
     @NotEmpty()
-    @Size(max = 255, min = 5)
+    @Size(max = 255, min = 1)
     @Column(name = "username",unique = true)
     private String username;
 
     @NotEmpty()
-    @Size(max = 255, min = 5)
+    @Size(max = 255, min = 1)
     @Column(name = "date")
     private String date;
 
     @NotEmpty()
-    @Size(max = 255, min = 5)
+    @Size(max = 255, min = 1)
     @Column(name = "password")
     private String password;
 
     @Transient
     @NotEmpty()
-    @Size(max = 255, min = 5)
+    @Size(max = 255, min = 1)
     @Column(name = "password2")
     private String password2;
 
