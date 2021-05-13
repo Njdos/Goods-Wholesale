@@ -1,6 +1,7 @@
 package ua.wholesale.web.site.controller;
 
-import org.apache.logging.log4j.message.Message;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,13 +15,14 @@ import ua.wholesale.web.site.service.GoodsService;
 import java.util.List;
 
 @Controller
+@Api(value = "All goods")
 public class MainController {
-
 
     @Autowired
     private GoodsService goodsService;
 
     @GetMapping("/main")
+    @ApiOperation(value = "Search good and Display all goods", response = String.class)
     public String main(
             @AuthenticationPrincipal User user,
             @RequestParam(required = false, defaultValue = "") String filter,
@@ -69,6 +71,7 @@ public class MainController {
     }
 
     @GetMapping
+    @ApiOperation(value = "First page", response = String.class)
     public String rather() {
         return "greeting";
         }

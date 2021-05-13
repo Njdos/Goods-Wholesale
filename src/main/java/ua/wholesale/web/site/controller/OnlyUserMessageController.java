@@ -1,5 +1,6 @@
 package ua.wholesale.web.site.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Controller
+@ApiOperation(value = "Display all good by user")
 public class OnlyUserMessageController {
 
     @Value("${upload.path}")
@@ -39,6 +41,7 @@ public class OnlyUserMessageController {
     private GoodsValidator goodsValidator;
 
     @PostMapping("/user-messages")
+    @ApiOperation(value = "Display all ")
     public String updateMessage(
             @AuthenticationPrincipal User user,
             @Valid
@@ -79,13 +82,14 @@ public class OnlyUserMessageController {
     }
 
     @GetMapping("/user-messages/{user}")
+    @ApiOperation(value = "If this good is him. Operation Edit" , response = String.class)
     public String userMessges(
             @AuthenticationPrincipal User currentUser,
             @PathVariable User user,
             Model model,
             @RequestParam(required = false) Goods good
     ) {
-        Set<Goods> messages = user.getMessages();
+        Set<Goods> messages = user.getGoods();
         model.addAttribute("messages", messages);
         model.addAttribute("message", good);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
@@ -95,6 +99,7 @@ public class OnlyUserMessageController {
     }
 
     @GetMapping("/message-delete/{messageId}")
+    @ApiOperation(value = "If this good is him. Operation Delete" , response = String.class)
     public String deleteMessage(
             @PathVariable Long messageId
     ) throws IOException {
@@ -102,6 +107,7 @@ public class OnlyUserMessageController {
         return "redirect:/main";
     }
 
+    @ApiOperation(value = "Change 1 image" , response = Boolean.class)
     private boolean saveFile1(@Valid Goods good, @RequestParam("file") MultipartFile file) throws IOException {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
             File uploadDir = new File(uploadPath);
@@ -118,6 +124,7 @@ public class OnlyUserMessageController {
         }
     }
 
+    @ApiOperation(value = "Change 2 image" , response = Boolean.class)
     private boolean saveFile2(@Valid Goods good, @RequestParam("files") MultipartFile files) throws IOException {
         if (files != null && !Objects.requireNonNull(files.getOriginalFilename()).isEmpty()) {
             File uploadDirs = new File(uploadPaths);
@@ -134,6 +141,7 @@ public class OnlyUserMessageController {
         }
     }
 
+    @ApiOperation(value = "Change 3 image" , response = Boolean.class)
     private boolean saveFile3(@Valid Goods good, @RequestParam("filesq") MultipartFile filesq) throws IOException {
         if (filesq != null && !Objects.requireNonNull(filesq.getOriginalFilename()).isEmpty()) {
             File uploadDirsq = new File(uploadPathsq);

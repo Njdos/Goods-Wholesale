@@ -1,5 +1,7 @@
 package ua.wholesale.web.site.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import ua.wholesale.web.site.model.Role;
 import ua.wholesale.web.site.model.User;
 import ua.wholesale.web.site.service.UserService;
@@ -24,6 +27,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Controller
+@Api(value = "Register user")
 public class RegistrationController {
 
     @Autowired
@@ -38,12 +42,14 @@ public class RegistrationController {
     @Autowired
     private UserValidator userValidator;
 
-    @GetMapping("/registration") 
+    @GetMapping("/registration")
+    @ApiOperation(value = "Display register forms", response = String.class)
     public String registration() {
         return "registration";
     }
 
     @PostMapping("/registration")
+    @ApiOperation(value = "Add user", response = String.class)
     public String addUser(
             @Valid
             @ModelAttribute("userForm") User user,
@@ -87,6 +93,7 @@ public class RegistrationController {
             return "registration";}
     }
 
+    @ApiOperation(value = "Save image" , response = Boolean.class)
     private boolean isFilet(User user, MultipartFile fileq) throws IOException {
         if (fileq != null && !Objects.requireNonNull(fileq.getOriginalFilename()).isEmpty()) {
             File uploadDirq = new File(uploadPathq);

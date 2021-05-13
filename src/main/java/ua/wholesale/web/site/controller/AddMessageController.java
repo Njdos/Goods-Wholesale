@@ -1,5 +1,7 @@
 package ua.wholesale.web.site.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,6 +27,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Controller
+@Api(value = "Add ad")
 public class AddMessageController {
 
     @Value("${upload.path}")
@@ -43,13 +46,16 @@ public class AddMessageController {
     private GoodsValidator goodsValidator;
 
     @GetMapping("/addnotice")
+    @ApiOperation(value = "Display forms for add good", response = String.class)
     public String addget(@AuthenticationPrincipal User user,
                          Model model) {
         model.addAttribute("user", user);
         return "addnotice";
     }
 
+
     @PostMapping("/addnotice")
+    @ApiOperation(value = "Save good", response = String.class)
     public String addpost(
             @AuthenticationPrincipal User user,
             @Valid
@@ -86,6 +92,8 @@ public class AddMessageController {
             return "addnotice";
         }
     }
+
+    @ApiOperation(value = "Save image 1")
     private boolean saveFile1(@Valid Goods good, @RequestParam("file") MultipartFile file) throws IOException {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
             File uploadDir = new File(uploadPath);
@@ -99,7 +107,7 @@ public class AddMessageController {
             return false;
         }
     }
-
+    @ApiOperation(value = "Save image 2")
     private boolean saveFile2(@Valid Goods good, @RequestParam("files") MultipartFile files) throws IOException {
         if (files != null && !Objects.requireNonNull(files.getOriginalFilename()).isEmpty()) {
             File uploadDirs = new File(uploadPaths);
@@ -113,7 +121,7 @@ public class AddMessageController {
             return false;
         }
     }
-
+    @ApiOperation(value = "Save image 3")
     private boolean saveFile3(@Valid Goods good, @RequestParam("filesq") MultipartFile filesq) throws IOException {
         if (filesq != null && !Objects.requireNonNull(filesq.getOriginalFilename()).isEmpty()) {
             File uploadDirsq = new File(uploadPathsq);

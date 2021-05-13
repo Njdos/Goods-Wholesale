@@ -79,7 +79,7 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Goods> messages;
+    private Set<Goods> goods;
 
 
     @Override

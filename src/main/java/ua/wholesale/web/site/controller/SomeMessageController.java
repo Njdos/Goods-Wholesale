@@ -1,5 +1,7 @@
 package ua.wholesale.web.site.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -11,12 +13,14 @@ import ua.wholesale.web.site.model.User;
 import ua.wholesale.web.site.service.GoodsService;
 
 @Controller
+@Api("Display ad")
 public class SomeMessageController {
 
     @Autowired
     private GoodsService goodsService;
 
     @GetMapping("/usernotice/{id}")
+    @ApiOperation(value = "Display ad by id" , response = String.class)
     public String greetidng(@AuthenticationPrincipal User user,
                             @PathVariable("id") long id,
                             Model model) {
