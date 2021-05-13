@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers(HttpMethod.GET,"/addnotice").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name(), Role.SELLER.name())
                     .antMatchers(HttpMethod.POST,"/addnotice").hasAnyAuthority(Role.ADMIN.name(), Role.SELLER.name())
-                    .antMatchers("/** ","/greeting","/registration", "/activate/*").permitAll()
+                    .antMatchers("/** ", "/activate/*").permitAll()
                     .anyRequest()
                 .authenticated()
                 .and()
