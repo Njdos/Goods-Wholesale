@@ -60,8 +60,9 @@ public class RegistrationController {
             @RequestParam("fileq") MultipartFile fileq,
             @RequestParam("roles") String roles
     ) throws IOException {
+
         userValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             userValidator.bindingResultErrors(bindingResult, model);
             model.addAttribute("user", user);
             return "registration";

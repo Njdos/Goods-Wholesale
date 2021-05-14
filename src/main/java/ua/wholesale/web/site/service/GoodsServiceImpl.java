@@ -3,6 +3,7 @@ package ua.wholesale.web.site.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.wholesale.web.site.model.Goods;
+import ua.wholesale.web.site.model.User;
 import ua.wholesale.web.site.repos.GoodsRepo;
 
 import java.util.List;
@@ -34,6 +35,13 @@ public class GoodsServiceImpl implements GoodsService{
         if (goodsRepo.existsById(id)) {
             goodsRepo.deleteById(id);
         }
+    }
+
+    @Override
+    public boolean findByTitle(Goods goods) {
+        Goods userFromDb = goodsRepo.findByTitle(goods.getTitle());
+        if (userFromDb != null)  return false;
+         return true;
     }
 
     @Override

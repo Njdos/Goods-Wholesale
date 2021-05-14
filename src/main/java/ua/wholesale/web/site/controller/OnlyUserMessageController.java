@@ -41,7 +41,7 @@ public class OnlyUserMessageController {
     private GoodsValidator goodsValidator;
 
     @PostMapping("/user-messages")
-    @ApiOperation(value = "Display all ")
+    @ApiOperation(value = "Display all by user goods ")
     public String updateMessage(
             @AuthenticationPrincipal User user,
             @Valid
@@ -55,27 +55,22 @@ public class OnlyUserMessageController {
             @RequestParam("filesq") MultipartFile filesq
     ) throws IOException {
 
-        goodsValidator.validate(good, bindingResult);
-        goodsValidator.bindingResultErrors(bindingResult, model);
         good.setAuthor(user);
-
-        if (good.getTitle() != null && !good.getTitle().isEmpty() &&
-                good.getDescription() != null && !good.getDescription().isEmpty() &&
-                good.getPrice() >= 0 && good.getPrice() <= 9999999 &&
-                good.getPlace() != null && !good.getPlace().isEmpty() &&
-                saveFile1(good, file) &&
-                saveFile2(good, files) &&
-                saveFile3(good, filesq)
-        ) {
+        goodsValidator.validate(good, bindingResult);
+        if (bindingResult.hasErrors()) {
+            goodsValidator.bindingResultErrors(bindingResult, model);
+            model.addAttribute("user", user);
+            model.addAttribute("messages", good);
+            return "redirect:/user-messages/" + messAutId + "?message=" + id;
+        }else {
+            saveFile1(good, file);
+            saveFile2(good, files);
+            saveFile3(good, filesq);
             goodsService.update(good);
             model.addAttribute("message", null);
             Iterable<Goods> goods = goodsService.findAll();
             model.addAttribute("messages", goods);
             return "redirect:/user-messages/" + user.getId();
-        } else {
-            model.addAttribute("user", user);
-            model.addAttribute("messages", good);
-            return "redirect:/user-messages/" + messAutId + "?message=" + id;
         }
     }
 
@@ -106,7 +101,7 @@ public class OnlyUserMessageController {
     }
 
     @ApiOperation(value = "Change 1 image" , response = Boolean.class)
-    private boolean saveFile1(@Valid Goods good, @RequestParam("file") MultipartFile file) throws IOException {
+    private void saveFile1(@Valid Goods good, @RequestParam("file") MultipartFile file) throws IOException {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
@@ -116,14 +111,11 @@ public class OnlyUserMessageController {
             String resultFilename = uuidFile + "." + file.getOriginalFilename();
             file.transferTo(new File(uploadPath + "/" + resultFilename));
             good.setFilename(resultFilename);
-            return true;
-        } else {
-            return false;
         }
     }
 
     @ApiOperation(value = "Change 2 image" , response = Boolean.class)
-    private boolean saveFile2(@Valid Goods good, @RequestParam("files") MultipartFile files) throws IOException {
+    private void saveFile2(@Valid Goods good, @RequestParam("files") MultipartFile files) throws IOException {
         if (files != null && !Objects.requireNonNull(files.getOriginalFilename()).isEmpty()) {
             File uploadDirs = new File(uploadPaths);
             if (!uploadDirs.exists()) {
@@ -133,14 +125,11 @@ public class OnlyUserMessageController {
             String resultFilenames = uuidFiles + "." + files.getOriginalFilename();
             files.transferTo(new File(uploadPaths + "/" + resultFilenames));
             good.setFilenames(resultFilenames);
-            return true;
-        } else {
-            return false;
         }
     }
 
     @ApiOperation(value = "Change 3 image" , response = Boolean.class)
-    private boolean saveFile3(@Valid Goods good, @RequestParam("filesq") MultipartFile filesq) throws IOException {
+    private void saveFile3(@Valid Goods good, @RequestParam("filesq") MultipartFile filesq) throws IOException {
         if (filesq != null && !Objects.requireNonNull(filesq.getOriginalFilename()).isEmpty()) {
             File uploadDirsq = new File(uploadPathsq);
             if (!uploadDirsq.exists()) {
@@ -150,9 +139,6 @@ public class OnlyUserMessageController {
             String resultFilenamesq = uuidFilesq + "." + filesq.getOriginalFilename();
             filesq.transferTo(new File(uploadPathsq + "/" + resultFilenamesq));
             good.setFilenamesq(resultFilenamesq);
-            return true;
-        } else {
-            return false;
         }
     }
 }

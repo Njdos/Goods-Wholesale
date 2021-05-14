@@ -65,31 +65,26 @@ public class AddMessageController {
             @RequestParam("filesq") MultipartFile filesq
     ) throws IOException {
 
-        goodsValidator.validate(good, bindingResult);
-        goodsValidator.bindingResultErrors(bindingResult, model);
         good.setAuthor(user);
-
-        if (good.getTitle() != null && !good.getTitle().isEmpty() &&
-                good.getDescription() != null && !good.getDescription().isEmpty() &&
-                good.getPrice() >= 0 && good.getPrice() <= 9999999 &&
-                good.getPlace() != null && !good.getPlace().isEmpty() &&
-                saveFile1(good, file) &&
-                saveFile2(good, files) &&
-                saveFile3(good, filesq)
-        ) {
+        goodsValidator.validate(good, bindingResult);
+        if(bindingResult.hasErrors()) {
+            goodsValidator.bindingResultErrors(bindingResult, model);
+            model.addAttribute("messages", good);
+            return "addnotice";
+        }else {
+            saveFile1(good, file);
+            saveFile2(good, files);
+            saveFile3(good, filesq);
             goodsService.save(good);
             model.addAttribute("message", null);
             Iterable<Goods> goods = goodsService.findAll();
             model.addAttribute("messages", goods);
             return "redirect:/main";
-        } else {
-            model.addAttribute("messages", good);
-            return "addnotice";
         }
     }
 
     @ApiOperation(value = "Save image 1")
-    private boolean saveFile1(@Valid Goods good, @RequestParam("file") MultipartFile file) throws IOException {
+    private void saveFile1(@Valid Goods good, @RequestParam("file") MultipartFile file) throws IOException {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) { uploadDir.mkdir(); }
@@ -97,13 +92,11 @@ public class AddMessageController {
             String resultFilename = uuidFile + "." + file.getOriginalFilename();
             file.transferTo(new File(uploadPath + "/" + resultFilename));
             good.setFilename(resultFilename);
-            return true;
-        } else {
-            return false;
         }
     }
+
     @ApiOperation(value = "Save image 2")
-    private boolean saveFile2(@Valid Goods good, @RequestParam("files") MultipartFile files) throws IOException {
+    private void saveFile2(@Valid Goods good, @RequestParam("files") MultipartFile files) throws IOException {
         if (files != null && !Objects.requireNonNull(files.getOriginalFilename()).isEmpty()) {
             File uploadDirs = new File(uploadPaths);
             if (!uploadDirs.exists()) { uploadDirs.mkdir();  }
@@ -111,13 +104,11 @@ public class AddMessageController {
             String resultFilenames = uuidFiles + "." + files.getOriginalFilename();
             files.transferTo(new File(uploadPaths + "/" + resultFilenames));
             good.setFilenames(resultFilenames);
-            return true;
-        } else {
-            return false;
         }
     }
+
     @ApiOperation(value = "Save image 3")
-    private boolean saveFile3(@Valid Goods good, @RequestParam("filesq") MultipartFile filesq) throws IOException {
+    private void saveFile3(@Valid Goods good, @RequestParam("filesq") MultipartFile filesq) throws IOException {
         if (filesq != null && !Objects.requireNonNull(filesq.getOriginalFilename()).isEmpty()) {
             File uploadDirsq = new File(uploadPathsq);
             if (!uploadDirsq.exists()) {
@@ -127,9 +118,6 @@ public class AddMessageController {
             String resultFilenamesq = uuidFilesq + "." + filesq.getOriginalFilename();
             filesq.transferTo(new File(uploadPathsq + "/" + resultFilenamesq));
             good.setFilenamesq(resultFilenamesq);
-            return true;
-        } else {
-            return false;
         }
     }
 }

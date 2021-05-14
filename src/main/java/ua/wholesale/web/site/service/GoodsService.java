@@ -2,6 +2,7 @@ package ua.wholesale.web.site.service;
 
 import org.springframework.stereotype.Component;
 import ua.wholesale.web.site.model.Goods;
+import ua.wholesale.web.site.model.User;
 
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,8 @@ public interface GoodsService {
     void delete(Goods goods);
 
     void deleteById(Long id);
+
+    boolean findByTitle(Goods goods);
 
     Goods getById(Long id);
 

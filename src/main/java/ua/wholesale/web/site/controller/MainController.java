@@ -31,36 +31,36 @@ public class MainController {
             @RequestParam(required = false, defaultValue = "1000000000") String pricemax,
             Model model) {
 
-        List<Goods> messages;
+        List<Goods> goods;
 
 //Тільки заголовок є
         if ((filter != null || !filter.isEmpty()) && (heading.equals("All"))) {
             long pricemin1 = Long.parseLong(pricemin);
             long pricemax1 = Long.parseLong(pricemax);
-            messages = goodsService.filterTitleAndPrice1AndPrice2(filter, pricemin1, pricemax1);
+            goods = goodsService.filterTitleAndPrice1AndPrice2(filter, pricemin1, pricemax1);
         }
 //Тільки рубрика все
         else if ((filter == null || filter.isEmpty()) && (heading.equals("All"))) {
             long pricemin1 = Long.parseLong(pricemin);
             long pricemax1 = Long.parseLong(pricemax);
-            messages = goodsService.filterPrice1AndPrice2(pricemin1, pricemax1);
+            goods = goodsService.filterPrice1AndPrice2(pricemin1, pricemax1);
         }
 //Є рубрика
         else if ((filter == null || filter.isEmpty()) && (heading != null || !heading.isEmpty()) && (!heading.equals("All"))) {
             long pricemin1 = Long.parseLong(pricemin);
             long pricemax1 = Long.parseLong(pricemax);
-            messages = goodsService.filterHeadingAndPrice1AndPrice2(heading, pricemin1, pricemax1);
+            goods = goodsService.filterHeadingAndPrice1AndPrice2(heading, pricemin1, pricemax1);
         }
 //Є заголовок і рубрика
         else if ((filter != null || !filter.isEmpty()) && (heading != null || !heading.isEmpty()) && (!heading.equals("All"))) {
             long pricemin1 = Long.parseLong(pricemin);
             long pricemax1 = Long.parseLong(pricemax);
-            messages = goodsService.filterTitleAndHeadingAndPrice1AndPrice2(filter, heading, pricemin1, pricemax1);
+            goods = goodsService.filterTitleAndHeadingAndPrice1AndPrice2(filter, heading, pricemin1, pricemax1);
         } else {
-            messages = goodsService.findAll();
+            goods = goodsService.findAll();
         }
 
-        model.addAttribute("messages",messages);
+        model.addAttribute("messages",goods);
         model.addAttribute("filter", filter);
         model.addAttribute("heading", heading);
         model.addAttribute("pricemin", pricemin);
