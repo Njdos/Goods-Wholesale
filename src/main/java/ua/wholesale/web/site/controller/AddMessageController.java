@@ -19,6 +19,7 @@ import ua.wholesale.web.site.service.GoodsService;
 import ua.wholesale.web.site.utils.validator.GoodsValidator;
 
 import javax.validation.Valid;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -88,8 +89,8 @@ public class AddMessageController {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) { uploadDir.mkdir(); }
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + "." + file.getOriginalFilename();
+            String uuidFiles = UUID.randomUUID().toString();
+            String resultFilename = uuidFiles + "." + file.getOriginalFilename();
             file.transferTo(new File(uploadPath + "/" + resultFilename));
             good.setFilename(resultFilename);
         }
@@ -107,7 +108,7 @@ public class AddMessageController {
         }
     }
 
-    @ApiOperation(value = "Save image 3")
+        @ApiOperation(value = "Save image 3")
     private void saveFile3(@Valid Goods good, @RequestParam("filesq") MultipartFile filesq) throws IOException {
         if (filesq != null && !Objects.requireNonNull(filesq.getOriginalFilename()).isEmpty()) {
             File uploadDirsq = new File(uploadPathsq);
