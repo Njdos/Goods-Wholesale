@@ -68,7 +68,7 @@ public class RegistrationController {
         } else {
             isFilet(user, fileq);
             user.setStatus(true);
-            user.setRoles(Collections.singleton(RolesChose(roles)));
+            RolesChose(roles);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.save(user);
             return "redirect:/main";
@@ -76,14 +76,14 @@ public class RegistrationController {
     }
 
 
-    @ApiOperation(value = "Choose Role" , response = Set.class)
-    private Role RolesChose(String role){
+    @ApiOperation(value = "Choose Role")
+    private void RolesChose(String role){
+        User user =  new User();
         switch (role){
-            case "USER" -> Collections.singleton(Role.USER);
-            case "SELLER" -> Collections.singleton(Role.SELLER);
-            default -> Collections.singleton(Role.ADMIN);
+            case "USER" -> user.setRoles(Collections.singleton(Role.USER));
+            case "SELLER" -> user.setRoles(Collections.singleton(Role.SELLER));
+            default -> user.setRoles(Collections.singleton(Role.ADMIN));
         }
-        return null;
     }
 
     @ApiOperation(value = "Save image" , response = Boolean.class)
