@@ -1,16 +1,17 @@
-package ua.wholesale.web.site.service;
+package ua.wholesale.web.site.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.wholesale.web.site.model.Goods;
 import ua.wholesale.web.site.model.User;
 import ua.wholesale.web.site.repos.GoodsRepo;
+import ua.wholesale.web.site.service.GoodsService;
 
 import java.util.List;
 import java.util.Set;
 
 @Service
-public class GoodsServiceImpl implements GoodsService{
+public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private GoodsRepo goodsRepo;

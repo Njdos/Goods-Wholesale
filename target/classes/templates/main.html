@@ -34,10 +34,10 @@
                     </select>
                 </label>
                 <label>
-                    <input type="text" name="pricemin"  class="form-control ml-2" th:value="${pricemin}?  ${pricemin} : ''" placeholder="pricemin" >
+                    <input type="number" name="pricemin"  class="form-control ml-2" th:value="${pricemin}?  ${pricemin} : ''" placeholder="pricemin" >
                 </label>
                 <label>
-                    <input type="text" name="pricemax"  class="form-control ml-2"  th:value="${pricemax}?  ${pricemax} : ''" placeholder="pricemax">
+                    <input type="number" name="pricemax"  class="form-control ml-2"  th:value="${pricemax}?  ${pricemax} : ''" placeholder="pricemax">
                 </label>
                 <button type="submit" class="btn btn-primary ml-2">Search</button>
             </form>

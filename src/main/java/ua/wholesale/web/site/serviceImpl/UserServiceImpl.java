@@ -1,4 +1,4 @@
-package ua.wholesale.web.site.service;
+package ua.wholesale.web.site.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.wholesale.web.site.model.User;
 import ua.wholesale.web.site.repos.UserRepo;
+import ua.wholesale.web.site.service.UserService;
 
 import java.util.List;
 import java.util.Set;

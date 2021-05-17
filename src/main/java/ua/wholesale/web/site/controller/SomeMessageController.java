@@ -26,6 +26,7 @@ public class SomeMessageController {
                             Model model) {
 
         Iterable<Goods> messages = goodsService.findById(id);
+
         model.addAttribute("messages", messages);
         model.addAttribute("user", user);
 

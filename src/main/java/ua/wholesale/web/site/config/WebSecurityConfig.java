@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import ua.wholesale.web.site.model.Role;
-import ua.wholesale.web.site.service.UserServiceImpl;
+import ua.wholesale.web.site.serviceImpl.UserServiceImpl;
 
 import javax.sql.DataSource;
 
@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                     .rememberMe()
                     .tokenRepository(persistentTokenRepository())
-                    .tokenValiditySeconds(7 * 24 * 60 * 60);
+                    .tokenValiditySeconds(15 * 60 * 60);
     }
 
     @Override

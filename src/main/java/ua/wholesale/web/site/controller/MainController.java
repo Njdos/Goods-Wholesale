@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.wholesale.web.site.model.Goods;
 import ua.wholesale.web.site.model.User;
-import ua.wholesale.web.site.service.GoodsService;
+import ua.wholesale.web.site.service.MainControllerService;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
 public class MainController {
 
     @Autowired
-    private GoodsService goodsService;
+    private MainControllerService mainControllerService;
 
     @GetMapping("/main")
     @ApiOperation(value = "Search good and Display all goods", response = String.class)
@@ -31,34 +31,7 @@ public class MainController {
             @RequestParam(required = false, defaultValue = "1000000000") String pricemax,
             Model model) {
 
-        List<Goods> goods;
-
-//Тільки заголовок є
-        if ((filter != null || !filter.isEmpty()) && (heading.equals("All"))) {
-            long pricemin1 = Long.parseLong(pricemin);
-            long pricemax1 = Long.parseLong(pricemax);
-            goods = goodsService.filterTitleAndPrice1AndPrice2(filter, pricemin1, pricemax1);
-        }
-//Тільки рубрика все
-        else if ((filter == null || filter.isEmpty()) && (heading.equals("All"))) {
-            long pricemin1 = Long.parseLong(pricemin);
-            long pricemax1 = Long.parseLong(pricemax);
-            goods = goodsService.filterPrice1AndPrice2(pricemin1, pricemax1);
-        }
-//Є рубрика
-        else if ((filter == null || filter.isEmpty()) && (heading != null || !heading.isEmpty()) && (!heading.equals("All"))) {
-            long pricemin1 = Long.parseLong(pricemin);
-            long pricemax1 = Long.parseLong(pricemax);
-            goods = goodsService.filterHeadingAndPrice1AndPrice2(heading, pricemin1, pricemax1);
-        }
-//Є заголовок і рубрика
-        else if ((filter != null || !filter.isEmpty()) && (heading != null || !heading.isEmpty()) && (!heading.equals("All"))) {
-            long pricemin1 = Long.parseLong(pricemin);
-            long pricemax1 = Long.parseLong(pricemax);
-            goods = goodsService.filterTitleAndHeadingAndPrice1AndPrice2(filter, heading, pricemin1, pricemax1);
-        } else {
-            goods = goodsService.findAll();
-        }
+        List<Goods> goods = mainControllerService.searchByFilter(filter,heading,pricemin,pricemax);
 
         model.addAttribute("messages",goods);
         model.addAttribute("filter", filter);
@@ -69,11 +42,4 @@ public class MainController {
 
         return "main";
     }
-
-    @GetMapping
-    @ApiOperation(value = "First page", response = String.class)
-    public String rather() {
-        return "greeting";
-        }
-
 }
