@@ -1,5 +1,5 @@
 
-/*CREATE TABLE public.persistent_loginsss
+/*CREATE TABLE public.persistent_logins
 (
     username character varying(64) NOT NULL,
     series character varying(64),
