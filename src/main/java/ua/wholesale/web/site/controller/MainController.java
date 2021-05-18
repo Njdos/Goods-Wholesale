@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.wholesale.web.site.model.Goods;
 import ua.wholesale.web.site.model.User;
+import ua.wholesale.web.site.service.LikeMeService;
 import ua.wholesale.web.site.service.MainControllerService;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public class MainController {
 
     @Autowired
     private MainControllerService mainControllerService;
+
+    @Autowired
+    private LikeMeService likeMeService;
 
     @GetMapping("/main")
     @ApiOperation(value = "Search good and Display all goods", response = String.class)
@@ -32,12 +36,14 @@ public class MainController {
             Model model) {
 
         List<Goods> goods = mainControllerService.searchByFilter(filter,heading,pricemin,pricemax);
+        List<Long> likeMeList = likeMeService.getListLikeMeIdByUserId(user.getId());
 
         model.addAttribute("messages",goods);
         model.addAttribute("filter", filter);
         model.addAttribute("heading", heading);
         model.addAttribute("pricemin", pricemin);
         model.addAttribute("pricemax", pricemax);
+        model.addAttribute("likeMeList", likeMeList);
         model.addAttribute("user", user);
 
         return "main";

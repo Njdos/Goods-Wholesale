@@ -3,12 +3,12 @@ package ua.wholesale.web.site.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.wholesale.web.site.service.EmailService;
-import ua.wholesale.web.site.service.TwillioService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class GreetingController {
-
-    @Autowired
-    private TwillioService twillioService;
 
     @Value("${TRIAL_NUMBER}")
     private String from;
@@ -31,6 +28,7 @@ public class GreetingController {
     public String getFirstPage() { return "greeting"; }
 
     @PostMapping
+    @Transactional
     public String postCookies(
             @RequestParam(value = "save_cookies", required = false) String save_cookies,
             @RequestParam(value = "email", required = false) String email,
@@ -38,15 +36,11 @@ public class GreetingController {
             @RequestParam(value =  "title", required = false) String title,
             @RequestParam(value = "email", required = false) String description,
 
-            @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
-            @RequestParam(value =  "bodyPhone", required = false) String bodyPhone,
-            @RequestParam(value = "countPhone", required = false) long countPhone,
             HttpServletResponse httpServletResponse
     ) {
 
         for (int i=0; i<count; i++) emailService.sendSimpleMessage(email, title, description);
 
-        for (int i=0; i<countPhone; i++)   twillioService.sendSms(phoneNumber, from, bodyPhone);
 
         if (save_cookies!=null){
             String scount = String.valueOf(count);

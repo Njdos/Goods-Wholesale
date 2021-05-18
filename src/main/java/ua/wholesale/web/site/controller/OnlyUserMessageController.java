@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,7 @@ public class OnlyUserMessageController {
 
     @PostMapping("/user-messages")
     @ApiOperation(value = "Display all by user goods ")
+    @Transactional
     public String updateMessage(
             @AuthenticationPrincipal User user,
             @Valid

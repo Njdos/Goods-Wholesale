@@ -36,12 +36,26 @@
                                         <div class="card-footer text-muted" >
                                             <table>
                                                 <tr>
-                                                    <th id="left" th:text="${message.getPrice()} + ' грн'"></th>
-                                                    <td id="right" th:text="${message.getPlace()}"></td>
+                                                    <th th:text="${message.getPrice()} + ' грн'"></th>
+
+                                                    <td  th:text="${message.getPlace()}"></td>
+                                                </tr>
+                                            </table>
+                                            <table>
+                                                <tr>
+                                                    <th>
+                                                        <div>
+                                                            <a th:href="@{${'/user-messages/' + message.getAuthor.getId()}}" th:text="${'Автор: ' + message.getAuthorName()}"></a>
+                                                        </div>
+                                                    </th>
+
+                                                    <td>
+                                                        <div id="center1">  <a th:href="@{${'/likedmess/delete/' + message.getId()}}">   <i class="fas fa-heart"></i>  </a>  </div>
+                                                    </td>
                                                 </tr>
                                             </table>
                                             <div class="m-2" align="center">
-                                                <a th:href="@{${'/user-messages/' + message.getAuthor.getId()}}" th:text="${message.getAuthorName()}"></a>
+                                                <label id="id" th:text="${'Код товара:' + message.getId()}"></label>
                                             </div>
                                         </div>
                                     </div>

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +47,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     @ApiOperation(value = "Add user", response = String.class)
+    @Transactional
     public String addUser(
             @Valid @ModelAttribute("userForm") User user,
             BindingResult bindingResult,
