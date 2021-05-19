@@ -31,6 +31,16 @@ public class Goods {
     @Column(name = "description")
     private String description;
 
+    @NotEmpty()
+    @Size(max = 2048, min = 1)
+    @Column(name = "manufacturer")
+    private String manufacturer;
+
+    @NotEmpty()
+    @Size(max = 999, min = 1)
+    @Column(name = "count")
+    private long count;
+
     @Column(name = "filename")
     private String filename;
 
@@ -58,11 +68,13 @@ public class Goods {
         return author != null ? author.getUsername() : "<none>";
     }
 
-    public Goods(String title, String heading, String description, long price, String place, User user) {
+    public Goods(String title, String heading, String description, String manufacturer, long price, String place, long count, User user) {
         this.title = title;
         this.heading = heading;
         this.description = description;
+        this.manufacturer = manufacturer;
         this.price = price;
+        this.count = count;
         this.place = place;
         this.author = user;
     }

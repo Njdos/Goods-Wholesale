@@ -26,12 +26,18 @@ public class GoodsValidatorImpl implements Validator, GoodsValidator {
         if (goods.getTitle().length()<1 || goods.getTitle().length()>255){
             errors.rejectValue("title","Size.messageForm.title", "Title not validates length(must have < 1 and > 255)");
         }
+        if (goods.getManufacturer().length()<1 || goods.getManufacturer().length()>255){
+            errors.rejectValue("manufacturer","Size.messageForm.manufacturer", "Manufacturer not validates length(must have < 1 and > 255)");
+        }
 
         if (goods.getDescription().length()<1 || goods.getDescription().length()>255){
             errors.rejectValue("description","Size.messageForm.description", "Description not validates length(must have < 1 and > 255)");
         }
         if(goods.getPrice()<0 || goods.getPrice()>9999999){
             errors.rejectValue("price", "Size.messageForm.price", "Price not validates length(must have < 0  and > 9.999.999)");
+        }
+        if(goods.getPrice()<0 || goods.getPrice()>1000){
+            errors.rejectValue("count", "Size.messageForm.count", "Count not validates length(must have < 0  and > 999)");
         }
         if (goods.getPlace().length()<1 || goods.getPlace().length()>255){
             errors.rejectValue("place","Size.messageForm.place", "Place not validates length(must have < 1  and > 255)");
@@ -47,6 +53,9 @@ public class GoodsValidatorImpl implements Validator, GoodsValidator {
             if (bindingResult.hasFieldErrors("title")) {
                 model.addAttribute("titleError", bindingResult.getFieldError("title").getDefaultMessage());
             }
+            if (bindingResult.hasFieldErrors("manufacturer")) {
+                model.addAttribute("manufacturerError", bindingResult.getFieldError("manufacturer").getDefaultMessage());
+            }
 
             if (bindingResult.hasFieldErrors("description")) {
                 model.addAttribute("descriptionError", bindingResult.getFieldError("description").getDefaultMessage());
@@ -54,6 +63,9 @@ public class GoodsValidatorImpl implements Validator, GoodsValidator {
 
             if (bindingResult.hasFieldErrors("price")) {
                 model.addAttribute("priceError", bindingResult.getFieldError("price").getDefaultMessage());
+            }
+            if (bindingResult.hasFieldErrors("count")) {
+                model.addAttribute("countError", bindingResult.getFieldError("count").getDefaultMessage());
             }
 
             if (bindingResult.hasFieldErrors("place")) {
