@@ -30,6 +30,7 @@ ua\wholesale\web\site\serviceImpl\UserServiceImpl.class
 ua\wholesale\web\site\serviceImpl\EmailServiceImpl.class
 ua\wholesale\web\site\controller\AddMessageController.class
 ua\wholesale\web\site\controller\GreetingController.class
+ua\wholesale\web\site\javafxController\JavafxBuyController.class
 ua\wholesale\web\site\model\User.class
 ua\wholesale\web\site\serviceImpl\RegistrationControllerServiceImpl.class
 ua\wholesale\web\site\model\LikeMe.class
