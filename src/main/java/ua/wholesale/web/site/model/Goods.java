@@ -26,6 +26,9 @@ public class Goods {
     @Column(name = "heading")
     private String heading;
 
+    @Column(name = "state")
+    private String state;
+
     @NotEmpty()
     @Size(max = 2048, min = 1)
     @Column(name = "description")

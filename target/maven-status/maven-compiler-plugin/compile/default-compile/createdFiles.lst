@@ -5,6 +5,7 @@ ua\wholesale\web\site\serviceImpl\MainControllerServiceImpl.class
 ua\wholesale\web\site\service\GoodsService.class
 ua\wholesale\web\site\utils\validator\GoodsValidator.class
 ua\wholesale\web\site\config\MvcConfig.class
+ua\wholesale\web\site\controller\SendSmsController.class
 ua\wholesale\web\site\serviceImpl\LikeMeServiceImpl.class
 ua\wholesale\web\site\repos\GoodsRepo.class
 ua\wholesale\web\site\utils\validator\GoodsValidatorImpl.class

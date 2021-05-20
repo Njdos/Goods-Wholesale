@@ -33,8 +33,13 @@
                 <div class="card-footer text-muted" >
                     <div class="row">
                         <div class="col-md-2" th:text="${'PRICE: ' + message.price}"></div>
-                        <div class="col-md-2" th:text="${'PLACE: ' + message.place}"></div>
                         <div class="col-md-2" th:text="${'COUNT: ' + message.count}"></div>
+                        <div class="col-md-2" th:text="${'STATE: ' + message.state}"></div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted" >
+                    <div class="row">
+                        <div class="col-md-4" th:text="${'PLACE: ' + message.place}"></div>
                         <div class="col-md-4" th:text="${'MANUFACTURER: ' + message.manufacturer}"></div>
                     </div>
                 </div>
@@ -49,7 +54,7 @@
             <div class="card-footer text-muted" >
                 <form action="/Buy" method="get">
                     <th:block th:each="message : ${messages}">
-                        <a th:href="@{${'/Buy/'  + message.getAuthor.getId() }}" type="submit">Buy</a>
+                        <a th:href="@{${'/Buy/'  + message.getAuthor.getId() + '/' + message.getId()}}" type="submit">Buy</a>
                     </th:block>
                 </form>
             </div>
