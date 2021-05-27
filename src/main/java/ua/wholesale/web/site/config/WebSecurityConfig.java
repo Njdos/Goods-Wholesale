@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                     .rememberMe()
                     .tokenRepository(persistentTokenRepository())
-                    .tokenValiditySeconds(15 * 60 * 60);
+                    .tokenValiditySeconds(60 * 60 * 60);
     }
 
     @Override

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-public class GreetingController {
+public class    GreetingController {
 
     @Value("${TRIAL_NUMBER}")
     private String from;
