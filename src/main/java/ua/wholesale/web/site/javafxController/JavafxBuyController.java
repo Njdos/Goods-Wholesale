@@ -56,7 +56,6 @@ public class JavafxBuyController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) throws LazyInitializationException {
-        System.out.println("OOOOOOO");
         for (Goods  good : goods){
             TitleGoods.setText(good.getTitle());
             DescriptionsGoods.setText(good.getDescription());
