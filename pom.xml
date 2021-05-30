@@ -17,6 +17,7 @@
     <name>serving-web-wholesale</name>
     <description>I know you do not reading. App for resume</description>
 
+
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>

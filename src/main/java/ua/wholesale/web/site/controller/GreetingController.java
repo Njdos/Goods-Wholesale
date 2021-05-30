@@ -17,9 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class    GreetingController {
 
-    @Value("${TRIAL_NUMBER}")
-    private String from;
-
     @Autowired
     private EmailService emailService;
 
