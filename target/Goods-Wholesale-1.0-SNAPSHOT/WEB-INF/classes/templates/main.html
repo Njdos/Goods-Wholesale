@@ -1,0 +1,113 @@
+    <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="parts/head :: head"></head>
+<body>
+
+<header th:replace="parts/navbar :: navbar"></header>
+
+<div class="container mt-5">
+
+
+
+    <div class="form-row">
+        <div class="form-group">
+            <form method="get" action="/main" class="form-inline">
+                <label>
+                    <input type="text" name="filter" class="form-control ml-2"  th:value="${filter == true}?  ${filter} : ''" placeholder="title">
+                </label>
+                <label>
+                    <select name="heading" class="form-control ml-2"  th:value="${heading}?  ${heading} : ''" >
+                        <option value="All" selected>All</option>
+                        <option value="Транспорт">Транспорт</option>
+                        <option value="Недвижимость">Недвижимость</option>
+                        <option value="Запчасти для транспорта">Запчасти для транспорта</option>
+                        <option value="Работа">Работа</option>
+                        <option value="Животные">Животные</option>
+                        <option value="Дом и сад">Дом и сад</option>
+                        <option value="Электроника">Электроника</option>
+                        <option value="Бизнес и услуги">Бизнес и услуги</option>
+                        <option value="Мода и стиль">Мода и стиль</option>
+                        <option value="Хобби, отдых и спорт">Хобби, отдых и спорт</option>
+                        <option value="Отдам даром">Отдам даром</option>
+                        <option value="Обмен">Обмен</option>
+                        <option value="Онлайн безопасность">Онлайн безопасность</option>
+                    </select>
+                </label>
+                <label>
+                    <input type="number" name="pricemin"  class="form-control ml-2" th:value="${pricemin}?  ${pricemin} : ''" placeholder="pricemin" >
+                </label>
+                <label>
+                    <input type="number" name="pricemax"  class="form-control ml-2"  th:value="${pricemax}?  ${pricemax} : ''" placeholder="pricemax">
+                </label>
+                <button type="submit" class="btn btn-primary ml-2">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        table {
+            width: 100%;
+        }
+
+        th{
+            text-align: left;
+        }
+        td{
+            text-align: right;
+        }
+    </style>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="card-columns">
+                <div th:each="message : ${messages}">
+                    <a th:href="@{${'/usernotice/'  + message.getId()}}">
+                        <div class="card my-3" style="width: 18rem;" >
+                            <div th:if="${message.filename}">
+                                <img th:src="@{${'/img/' + message.getFilename()}}" class="card-img-top"/>
+                                <div class="m-2" align="center">
+                                    <span th:text="${message.getTitle()}"></span>
+                                </div>
+                                <div class="card-footer text-muted" >
+                                    <table>
+                                        <tr>
+                                            <th th:text="${message.getPrice()} + ' грн'"></th>
+
+                                            <td  th:text="${message.getPlace()}"></td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <th>
+                                                <div>
+                                                    <a th:href="@{${'/user-messages/' + message.getAuthor.getId()}}" th:text="${'Автор: ' + message.getAuthorName()}"></a>
+                                                </div>
+                                            </th>
+
+                                            <td>
+                                                <div th:if="${likeMeList.contains(message.getId())}">
+                                                    <div id="center1">  <a th:href="@{${'/likedmess/delete/' + message.getId()}}">   <i class="fas fa-heart"></i>  </a>  </div>
+                                                </div>
+                                                <div th:unless="${likeMeList.contains(message.getId())}">
+                                                    <div id="center3">  <a th:href="@{${'/likedmess/add/' + message.getId()}}"> <i class="far fa-heart"></i> </a>  </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="m-2" align="center">
+                                        <label id="id" th:text="${'Код товара:' + message.getId()}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<scripts th:replace="parts/foot :: foot"></scripts>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="parts/head :: head"></head>
+<body>
+
+<header th:replace="parts/navbar :: navbar"></header>
+
+<div class="container mt-5">
+
+
+    <div th:if="${isCurrentUser}">
+        <div th:replace="parts/messageEdit :: messageEdit"></div>
+    </div>
+
+    <div th:replace="parts/messageList :: messageList" ></div>
+
+
+</div>
+<scripts th:replace="parts/foot :: foot"></scripts>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="parts/head :: head"></head>
+<body>
+
+<header th:replace="parts/navbar :: navbar"></header>
+
+<div class="container mt-5">
+
+    <style>
+        table {
+            width: 100%;
+        }
+
+        th{
+            text-align: left;
+        }
+        td{
+            text-align: right;
+        }
+    </style>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="card-columns">
+                <div th:each="message : ${messages}">
+                    <div th:each="loveMess : ${loveMess}">
+                        <div th:if="${loveMess.getMessId()}==${message.getId()}">
+                            <a th:href="@{${'/usernotice/'  + message.getId()}}">
+                                <div class="card my-3" style="width: 18rem;" >
+                                    <div th:if="${message.filename}">
+                                        <img th:src="@{${'/img/' + message.getFilename()}}" class="card-img-top"/>
+                                        <div class="m-2" align="center">
+                                            <span th:text="${message.getTitle()}"></span>
+                                        </div>
+                                        <div class="card-footer text-muted" >
+                                            <table>
+                                                <tr>
+                                                    <th th:text="${message.getPrice()} + ' грн'"></th>
+
+                                                    <td  th:text="${message.getPlace()}"></td>
+                                                </tr>
+                                            </table>
+                                            <table>
+                                                <tr>
+                                                    <th>
+                                                        <div>
+                                                            <a th:href="@{${'/user-messages/' + message.getAuthor.getId()}}" th:text="${'Автор: ' + message.getAuthorName()}"></a>
+                                                        </div>
+                                                    </th>
+
+                                                    <td>
+                                                        <div id="center1">  <a th:href="@{${'/likedmess/delete/' + message.getId()}}">   <i class="fas fa-heart"></i>  </a>  </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div class="m-2" align="center">
+                                                <label id="id" th:text="${'Код товара:' + message.getId()}"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<scripts th:replace="parts/foot :: foot"></scripts>
+</body>
+</html>

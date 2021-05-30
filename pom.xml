@@ -16,6 +16,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>serving-web-wholesale</name>
     <description>I know you do not reading. App for resume</description>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
@@ -130,6 +131,11 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
             <version>16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+            <version>2.3.11.RELEASE</version>
         </dependency>
 
 
