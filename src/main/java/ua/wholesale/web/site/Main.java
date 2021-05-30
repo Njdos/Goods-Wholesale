@@ -20,6 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Main extends Application {
 
      public static void main(String[] args) {
+         System.out.println("Hello, Oleg! I am Ruslan)))");
         SpringApplication.run(Main.class, args);
         launch(args);
     }
