@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http
                     .authorizeRequests()
                     .antMatchers("/addnotice", "/").hasAnyAuthority(Role.ADMIN.name(), Role.SELLER.name())
-                    .antMatchers("/chat","/registration", "/login").permitAll()
+                    .antMatchers("/chat","/confirmEmail","/registration", "/login").permitAll()
                     .anyRequest()
                     .authenticated()
                 .and()

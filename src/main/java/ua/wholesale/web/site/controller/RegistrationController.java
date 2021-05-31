@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ua.wholesale.web.site.model.User;
+import ua.wholesale.web.site.service.EmailService;
 import ua.wholesale.web.site.service.RegistrationControllerService;
 import ua.wholesale.web.site.service.UserService;
 import ua.wholesale.web.site.utils.validator.UserValidator;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 
@@ -37,6 +41,9 @@ public class RegistrationController {
     @Autowired
     private UserValidator userValidator;
 
+    @Autowired
+    private EmailService emailService;
+
 
     @GetMapping("/registration")
     @ApiOperation(value = "Display register forms", response = String.class)
@@ -53,7 +60,8 @@ public class RegistrationController {
             BindingResult bindingResult,
             Model model,
             @RequestParam("fileq") MultipartFile fileq,
-            @RequestParam("roles") String roles
+            @RequestParam("roles") String roles,
+            HttpServletResponse httpServletResponse
     ) throws IOException {
 
         userValidator.validate(user, bindingResult);
@@ -64,12 +72,14 @@ public class RegistrationController {
             return "registration";
         }
         else {
+            emailService.sendSimpleMessage(user.getEmail(), httpServletResponse);
             registrationControllerService.isFilet(user,fileq);
             registrationControllerService.RolesChose(roles);
             user.setStatus(true);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.save(user);
-            return "redirect:/main";
+            return "login";
         }
     }
 }
+
