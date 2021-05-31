@@ -60,8 +60,7 @@ public class RegistrationController {
             BindingResult bindingResult,
             Model model,
             @RequestParam("fileq") MultipartFile fileq,
-            @RequestParam("roles") String roles,
-            HttpServletResponse httpServletResponse
+            @RequestParam("roles") String roles
     ) throws IOException {
 
         userValidator.validate(user, bindingResult);
@@ -72,11 +71,11 @@ public class RegistrationController {
             return "registration";
         }
         else {
-            emailService.sendSimpleMessage(user.getEmail(), httpServletResponse);
             registrationControllerService.isFilet(user,fileq);
             registrationControllerService.RolesChose(roles);
             user.setStatus(true);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            emailService.sendSimpleMessage(user.getEmail());
             userService.save(user);
             return "login";
         }

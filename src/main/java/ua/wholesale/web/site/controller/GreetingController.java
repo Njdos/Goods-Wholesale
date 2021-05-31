@@ -19,9 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/chat")
 public class    GreetingController {
 
-    @Value("${TRIAL_NUMBER}")
-    private String from;
-
     @Autowired
     private EmailService emailService;
 

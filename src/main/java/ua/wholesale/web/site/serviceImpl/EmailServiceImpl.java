@@ -21,20 +21,14 @@ public class EmailServiceImpl implements EmailService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public void sendSimpleMessage(String email, HttpServletResponse httpServletResponse) {
+    public void sendSimpleMessage(String email) {
 
-        Random passGen = new Random();
-        String password = String.valueOf(passGen.nextLong());
-        String password2 = passwordEncoder.encode(password);
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Confirm Email");
-        message.setText("Confirm password " + password2);
+        message.setText("Hello you are new user im Vinrinok ");
 
-        Cookie email_confirm = new Cookie("email_confirm", password2);
-        email_confirm.setMaxAge(60 * 60 * 60);
-        httpServletResponse.addCookie(email_confirm);
         emailSender.send(message);
     }
 }

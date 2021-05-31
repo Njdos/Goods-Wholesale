@@ -7,6 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public interface EmailService {
 
-    void sendSimpleMessage(String email, HttpServletResponse httpServletResponse);
+    void sendSimpleMessage(String email);
 
 }
