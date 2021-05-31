@@ -20,7 +20,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Main extends Application {
 
      public static void main(String[] args) {
-         System.out.println("Hello");
         SpringApplication.run(Main.class, args);
         launch(args);
     }
@@ -41,5 +40,4 @@ public class Main extends Application {
                 .paths(PathSelectors.any())
                 .build();
     }
-
 }
