@@ -13,12 +13,8 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender emailSender;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Override
     public void sendSimpleMessage(String email, String activeCode) {
-
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);

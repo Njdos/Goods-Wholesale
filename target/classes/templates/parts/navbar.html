@@ -15,7 +15,7 @@
         <div th:each="user : ${user}">
             <nav class="my-3 my-md-0 me-md-3">
                 <th:block th:if="${!user.getRoles().stream().findFirst().get().name().equals('USER')}">
-                    <a class="p-2 text-dark" href="/addnotice" th:text="${user.getRoles()}">Подати Оголошення</a>
+                    <a class="p-2 text-dark" href="/addnotice" >Подати Оголошення</a>
 
                     <a class="p-2 text-dark" th:href="@{${'/user-messages/'  + user.getId()}}">Мої Оголошення</a>
                 </th:block>
