@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ua.wholesale.web.site.model.User;
 import ua.wholesale.web.site.service.EmailService;
-import ua.wholesale.web.site.service.RegistrationControllerService;
+import ua.wholesale.web.site.service.RegistrationService;
 import ua.wholesale.web.site.service.UserService;
 import ua.wholesale.web.site.utils.validator.UserValidator;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.UUID;
@@ -34,7 +31,7 @@ public class RegistrationController {
     private UserService userService;
 
     @Autowired
-    private RegistrationControllerService registrationControllerService;
+    private RegistrationService registrationControllerService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -71,16 +68,16 @@ public class RegistrationController {
             model.addAttribute("user", user);
             return "registration";
         }
-        else {
-            registrationControllerService.isFilet(user,fileq);
-            registrationControllerService.RolesChose(roles);
-            user.setStatus(false);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setActiveCode(UUID.randomUUID().toString());
-            emailService.sendSimpleMessage(user.getEmail(), user.getActiveCode());
-            userService.save(user);
-            return "login";
-        }
+
+        registrationControllerService.isFilet(user,fileq);
+        registrationControllerService.RolesChose(roles);
+        user.setStatus(false);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setActiveCode(UUID.randomUUID().toString());
+        emailService.sendSimpleMessage(user.getEmail(), user.getActiveCode());
+        userService.save(user);
+        return "login";
+
     }
 }
 

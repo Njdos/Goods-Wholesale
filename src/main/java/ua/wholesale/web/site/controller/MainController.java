@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.wholesale.web.site.model.Goods;
 import ua.wholesale.web.site.model.User;
 import ua.wholesale.web.site.service.LikeMeService;
-import ua.wholesale.web.site.service.MainControllerService;
+import ua.wholesale.web.site.service.MainService;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
 public class MainController {
 
     @Autowired
-    private MainControllerService mainControllerService;
+    private MainService mainControllerService;
 
     @Autowired
     private LikeMeService likeMeService;

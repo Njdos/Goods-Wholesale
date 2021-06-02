@@ -7,7 +7,7 @@ import ua.wholesale.web.site.model.Goods;
 import java.io.IOException;
 
 @Controller
-public interface AddMessageControllerService {
+public interface AddMessageService {
 
     void saveFile1(Goods good, MultipartFile file) throws IOException;
 

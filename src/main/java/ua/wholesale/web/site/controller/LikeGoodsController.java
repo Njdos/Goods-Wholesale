@@ -47,8 +47,11 @@ public class LikeGoodsController {
             likeMeService.save(id, user.getId());
             return "redirect:/main";
         }
-        return "redirect:/main"; }
+        return "redirect:/main";
+    }
 
     @GetMapping("/likedmess/delete/{id}")
-    public String deleteLIke(@AuthenticationPrincipal User user, @PathVariable long id) { likeMeService.delete(id , user.getId());   return "redirect:/main"; }
+    public String deleteLIke(@AuthenticationPrincipal User user, @PathVariable long id) {
+        likeMeService.delete(id , user.getId());
+        return "redirect:/main"; }
 }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.wholesale.web.site.model.Goods;
-import ua.wholesale.web.site.service.AddMessageControllerService;
+import ua.wholesale.web.site.service.OnlyUserMessageService;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class AddMessageControllerServiceImpl implements AddMessageControllerService {
+public class OnlyUserMessageServiceImpl implements OnlyUserMessageService {
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -27,9 +27,11 @@ public class AddMessageControllerServiceImpl implements AddMessageControllerServ
     public void saveFile1(Goods good, MultipartFile file) throws IOException {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
             File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) { uploadDir.mkdir(); }
-            String uuidFiles = UUID.randomUUID().toString();
-            String resultFilename = uuidFiles + "." + file.getOriginalFilename();
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFilename = uuidFile + "." + file.getOriginalFilename();
             file.transferTo(new File(uploadPath + "/" + resultFilename));
             good.setFilename(resultFilename);
         }
@@ -39,7 +41,9 @@ public class AddMessageControllerServiceImpl implements AddMessageControllerServ
     public void saveFile2(Goods good, MultipartFile files) throws IOException {
         if (files != null && !Objects.requireNonNull(files.getOriginalFilename()).isEmpty()) {
             File uploadDirs = new File(uploadPaths);
-            if (!uploadDirs.exists()) { uploadDirs.mkdir();  }
+            if (!uploadDirs.exists()) {
+                uploadDirs.mkdir();
+            }
             String uuidFiles = UUID.randomUUID().toString();
             String resultFilenames = uuidFiles + "." + files.getOriginalFilename();
             files.transferTo(new File(uploadPaths + "/" + resultFilenames));

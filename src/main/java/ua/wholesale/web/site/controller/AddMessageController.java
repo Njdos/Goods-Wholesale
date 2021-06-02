@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ua.wholesale.web.site.model.Goods;
 import ua.wholesale.web.site.model.User;
-import ua.wholesale.web.site.service.AddMessageControllerService;
+import ua.wholesale.web.site.service.AddMessageService;
 import ua.wholesale.web.site.service.GoodsService;
 import ua.wholesale.web.site.utils.validator.GoodsValidator;
 
@@ -27,7 +27,7 @@ import java.io.IOException;
 public class AddMessageController {
 
     @Autowired
-    private AddMessageControllerService addMessageControllerService;
+    private AddMessageService addMessageControllerService;
 
     @Autowired
     private GoodsService goodsService;
@@ -63,21 +63,18 @@ public class AddMessageController {
 
         goodsValidator.validate(good, bindingResult);
 
-        if(bindingResult.hasErrors())
-        {
+        if(bindingResult.hasErrors()) {
             goodsValidator.bindingResultErrors(bindingResult, model);
             model.addAttribute("messages", good);
-
             return "addnotice";
-        } else
-        {
-
-            addMessageControllerService.saveFile1(good, file);
-            addMessageControllerService.saveFile2(good, files);
-            addMessageControllerService.saveFile3(good, filesq);
-            goodsService.save(good);
-
-            return "redirect:/main";
         }
+
+        addMessageControllerService.saveFile1(good, file);
+        addMessageControllerService.saveFile2(good, files);
+        addMessageControllerService.saveFile3(good, filesq);
+        goodsService.save(good);
+
+        return "redirect:/main";
+
     }
 }

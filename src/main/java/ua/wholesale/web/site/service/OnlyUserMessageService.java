@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 
 @Component
-public interface OnlyUserMessageControllerService {
+public interface OnlyUserMessageService {
 
     void saveFile1(@Valid Goods good, @RequestParam("file") MultipartFile file) throws IOException;
 

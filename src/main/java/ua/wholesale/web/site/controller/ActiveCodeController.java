@@ -18,13 +18,16 @@ public class ActiveCodeController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("active/{activeCode}")
     public String activeCode(@PathVariable String activeCode, Model model){
+
         User user = userRepo.findByActiveCode(activeCode);
 
         if (user==null){
             model.addAttribute("messageActive","Active code was not found. Sorry ");
         }
+
         user.setActiveCode(null);
         user.setStatus(true);
         userService.save(user);

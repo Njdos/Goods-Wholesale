@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.wholesale.web.site.model.Role;
 import ua.wholesale.web.site.model.User;
-import ua.wholesale.web.site.service.RegistrationControllerService;
+import ua.wholesale.web.site.service.RegistrationService;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class RegistrationControllerServiceImpl implements RegistrationControllerService {
+public class RegistrationServiceImpl implements RegistrationService {
 
     @Value("${upload.path}q")
     private String uploadPathq;

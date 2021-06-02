@@ -7,7 +7,7 @@ import ua.wholesale.web.site.model.User;
 import java.io.IOException;
 
 @Component
-public interface RegistrationControllerService {
+public interface RegistrationService {
 
     void RolesChose(String role);
 
