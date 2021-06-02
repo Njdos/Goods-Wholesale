@@ -7,6 +7,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import ua.wholesale.web.site.model.ChatMessage;
@@ -15,6 +17,7 @@ import ua.wholesale.web.site.model.ChatMessage;
  * Created by rajeevkumarsingh on 25/07/17.
  */
 @Component
+@RequestMapping("/chat")
 public class WebSocketEventListener {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);

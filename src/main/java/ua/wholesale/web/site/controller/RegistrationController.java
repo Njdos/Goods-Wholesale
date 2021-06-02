@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 @Api(value = "Register user")
@@ -73,9 +74,10 @@ public class RegistrationController {
         else {
             registrationControllerService.isFilet(user,fileq);
             registrationControllerService.RolesChose(roles);
-            user.setStatus(true);
+            user.setStatus(false);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            emailService.sendSimpleMessage(user.getEmail());
+            user.setActiveCode(UUID.randomUUID().toString());
+            emailService.sendSimpleMessage(user.getEmail(), user.getActiveCode());
             userService.save(user);
             return "login";
         }

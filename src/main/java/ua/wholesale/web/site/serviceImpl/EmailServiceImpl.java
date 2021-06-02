@@ -7,10 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.wholesale.web.site.service.EmailService;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Random;
-
 @Service
 public class EmailServiceImpl implements EmailService {
 
@@ -21,13 +17,13 @@ public class EmailServiceImpl implements EmailService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public void sendSimpleMessage(String email) {
+    public void sendSimpleMessage(String email, String activeCode) {
 
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Confirm Email");
-        message.setText("Hello you are new user im Vinrinok ");
+        message.setText("Please click on link for confirm your email :) " + "http://localhost:1234/active/"+activeCode);
 
         emailSender.send(message);
     }
