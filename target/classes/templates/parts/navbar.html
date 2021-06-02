@@ -8,15 +8,18 @@
             border-radius: 40%;
         }
     </style>
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-body border-bottom shadow-sm">
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-body border-bottom sha dow-sm">
         <a href="/main" class="my-0 mr-md-auto font-weight-normal"><h2>VinRinok</h2></a>
         <a class="p-2 text-dark" href="/main">Головна сторінка</a>
         <a class="p-2 text-dark" href="/lovedMess">Сподобавші</a>
-        <a class="p-2 text-dark" href="/addnotice">Подати Оголошення</a>
         <div th:each="user : ${user}">
             <nav class="my-3 my-md-0 me-md-3">
-                <th:block th:if="${user.getUsername()}">
+                <th:block th:if="${!user.getRoles().stream().findFirst().get().name().equals('USER')}">
+                    <a class="p-2 text-dark" href="/addnotice" th:text="${user.getRoles()}">Подати Оголошення</a>
+
                     <a class="p-2 text-dark" th:href="@{${'/user-messages/'  + user.getId()}}">Мої Оголошення</a>
+                </th:block>
+                <th:block th:if="${user.getUsername()}">
                     <a th:href="@{${'/profile/' + user.getId()}}"><h4 class="navbar-text mr-3" th:text="${user.getUsername()}"></h4></a>
                     <a th:href="@{${'/profile/' + user.getId()}}"><img th:src="@{${'/img/' + user.getFilenameq()}}" class="round"></a>
                 </th:block>

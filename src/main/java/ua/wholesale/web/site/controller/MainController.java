@@ -34,7 +34,9 @@ public class MainController {
             @RequestParam(required = false, defaultValue = "0") String pricemin,
             @RequestParam(required = false, defaultValue = "1000000000") String pricemax,
             Model model) {
-
+        if (user==null){
+            return "login";
+        }
         List<Goods> goods = mainControllerService.searchByFilter(filter,heading,pricemin,pricemax);
         List<Long> likeMeList = likeMeService.getListLikeMeIdByUserId(user.getId());
 

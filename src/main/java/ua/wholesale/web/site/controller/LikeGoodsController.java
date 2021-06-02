@@ -29,7 +29,9 @@ public class LikeGoodsController {
             @AuthenticationPrincipal User user,
             Model model) {
 
-
+        if (user==null){
+            return "login";
+        }
         List<Goods> messages  = goodsService.findAll();
 
         Set<LikeMe> likeMe = likeMeService.findByUserId(user.getId());
