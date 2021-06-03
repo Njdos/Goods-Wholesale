@@ -47,7 +47,7 @@
             <div class="card-footer text-muted" >
                 <form action="/sendSms" method="get" >
                     <th:block th:each="message : ${messages}">
-                        <a th:href="@{/}" type="submit">Send Sms To The Author</a>
+                        <a th:href="@{${'/sendSms/'+ message.getAuthor.getId()}}" type="submit">Send Sms To The Author</a>
                     </th:block>
                 </form>
             </div>
