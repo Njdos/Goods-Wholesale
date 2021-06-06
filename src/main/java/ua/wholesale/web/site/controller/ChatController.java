@@ -1,37 +1,29 @@
 package ua.wholesale.web.site.controller;
 
 
-import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import ua.wholesale.web.site.model.ChatMessage;
+import ua.wholesale.web.site.model.MessageModel;
+import ua.wholesale.web.site.model.UserStorage;
 
 /**
  * Created by rajeevkumarsingh on 24/07/17.
  */
 @Controller
-@RequestMapping("/chat")
 public class ChatController {
 
-    final static Logger logger = Logger.getLogger(ChatController.class);
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
-    @MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/public")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
-        logger.info("Send sms to the other users");
-        return chatMessage;
-    }
-    @MessageMapping("/chat.addUser")
-    @SendTo("/topic/public")
-    public ChatMessage addUser(@Payload ChatMessage chatMessage,
-                               SimpMessageHeaderAccessor headerAccessor) {
-        headerAccessor.getSessionAttributes().put("username", "Loser");
-        logger.info("Add new user to the chat");
-        return chatMessage;
+    @MessageMapping("/chat/{to}")
+    public void sendMessage(@DestinationVariable String to, MessageModel message) {
+        boolean isExists = UserStorage.getInstance().getUsers().contains(to);
+        if (isExists) {
+            simpMessagingTemplate.convertAndSend("/topic/messages/" + to, message);
+        }
     }
 
 }

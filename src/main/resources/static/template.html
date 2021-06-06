@@ -17,13 +17,33 @@
 <div class="container clearfix">
     <div class="people-list" id="people-list">
         <div class="search">
-            <input id="userName" placeholder="search" type="text"/>
-            <button onclick="registration()">Enter the chat</button>
-            <button onclick="fetchAll()">Refresh</button>
+            <input placeholder="search" type="text"/>
+            <i class="fa fa-search"></i>
         </div>
-        <ul class="list" id="usersList">
+        <ul class="list">
+            <li class="clearfix">
+                <img alt="avatar" height="55px"
+                     src="https://rtfm.co.ua/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"
+                     width="55px"/>
+                <div class="about">
+                    <div class="name">UserLogin</div>
+                    <div class="status">
+                        <i class="fa fa-circle online"></i>
+                    </div>
+                </div>
+            </li>
 
-
+            <li class="clearfix">
+                <img alt="avatar" height="55px"
+                     src="https://rtfm.co.ua/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"
+                     width="55px"/>
+                <div class="about">
+                    <div class="name">UserLogin</div>
+                    <div class="status">
+                        <i class="fa fa-circle offline"></i>
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
 
@@ -34,7 +54,7 @@
                  width="55px"/>
 
             <div class="chat-about">
-                <div class="chat-with" id="selectedUserId"></div>
+                <div class="chat-with">Chat with UserLogin</div>
                 <div class="chat-num-messages"></div>
             </div>
             <i class="fa fa-star"></i>
@@ -42,6 +62,28 @@
 
         <div class="chat-history">
             <ul>
+
+                <li class="clearfix">
+                    <div class="message-data align-right">
+                        <span class="message-data-time">10:14 AM, Today</span> &nbsp; &nbsp;
+                        <span class="message-data-name">Olia</span> <i class="fa fa-circle me"></i>
+
+                    </div>
+                    <div class="message other-message float-right">
+                        Well I am not sure. The rest of the team is not here yet. Maybe in an hour or so? Have you faced
+                        any problems at the last phase of the project?
+                    </div>
+                </li>
+
+                <li>
+                    <div class="message-data">
+                        <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+                        <span class="message-data-time">10:20 AM, Today</span>
+                    </div>
+                    <div class="message my-message">
+                        Actually everything was fine. I'm very excited to show this to our team.
+                    </div>
+                </li>
 
             </ul>
 

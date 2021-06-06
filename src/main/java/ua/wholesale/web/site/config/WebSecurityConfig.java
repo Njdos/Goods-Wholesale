@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                     .authorizeRequests()
-                    .antMatchers("/addnotice").hasAnyAuthority(Role.ADMIN.name(), Role.SELLER.name())
+/*                    .antMatchers("/addnotice").hasAnyAuthority(Role.ADMIN.name(), Role.SELLER.name())*/
                     .antMatchers("/chat","/confirmEmail","/registration", "/login","/active/*","/**").permitAll()
                     .anyRequest()
                     .authenticated()
