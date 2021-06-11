@@ -5,16 +5,20 @@ import org.springframework.stereotype.Controller;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+import ua.wholesale.web.site.model.Goods;
 import ua.wholesale.web.site.telegram.model.BotState;
 import ua.wholesale.web.site.telegram.model.UserTelegram;
 import ua.wholesale.web.site.telegram.service.DataCacheService;
 import ua.wholesale.web.site.telegram.service.FillingService;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 
 @Controller
 public class BotBuyGoods extends TelegramLongPollingBot {
@@ -80,13 +84,23 @@ public class BotBuyGoods extends TelegramLongPollingBot {
             userTelegram.setState(String.valueOf(botState));
             userTelegram.setUserid(userId);
 
-            SendMessage sendMessage = fillingProfileHandler.getHandler(userTelegram, message);
+             SendMessage sendMessage = fillingProfileHandler.getHandler(userTelegram, message);
             try {
                 execute(sendMessage);
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
-
+        }
+    }
+    public void sendPhoto(Message message, Goods goods){
+        SendPhoto msg = new SendPhoto();
+        msg.setChatId(String.valueOf(message.getChatId()));
+        msg.setPhoto(new InputFile(new File("C:/Users/Admin/IdeaProjects/Goods-Wholesale/uploads/" + goods.getFilename())));
+        msg.setCaption("Good photos");
+        try {
+            execute(msg);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
     }
 }

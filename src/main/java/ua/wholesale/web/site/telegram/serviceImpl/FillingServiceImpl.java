@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import ua.wholesale.web.site.model.Goods;
+import ua.wholesale.web.site.service.GoodsService;
+import ua.wholesale.web.site.telegram.controller.BotBuyGoods;
 import ua.wholesale.web.site.telegram.model.BotState;
 import ua.wholesale.web.site.telegram.model.UserTelegram;
 import ua.wholesale.web.site.telegram.service.DataCacheService;
@@ -12,13 +15,19 @@ import ua.wholesale.web.site.telegram.service.FillingService;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Set;
 
 @Service
 public class FillingServiceImpl implements FillingService {
 
     @Autowired
-    public DataCacheService dataCache;
+    private DataCacheService dataCache;
 
+    @Autowired
+    private GoodsService goodsService;
+
+    @Autowired
+    private BotBuyGoods botBuyGoods;
 
     @Override
     public SendMessage getHandler(UserTelegram userTelegram, Message message) {
@@ -51,9 +60,18 @@ public class FillingServiceImpl implements FillingService {
             userTelegram1.setDesire(answer);
         }
         if (botState.equals(BotState.ASK_GOOD)){
-            replys.setText((String) appProps.get("reply.askGood"));
-            userTelegram1.setState(String.valueOf(BotState.ASK_NUMBERS));
             userTelegram1.setKod(answer);
+            try{
+                Goods goods = goodsService.getById(Long.valueOf(answer));
+                if (goods == null) new  Exception();
+                replys.setText(goods + "\n" + appProps.get("reply.askGood"));
+                userTelegram1.setState(String.valueOf(BotState.ASK_NUMBERS));
+                userTelegram1.setKod(answer);
+                botBuyGoods.sendPhoto(message,goods);
+            }catch (Exception e){
+                userTelegram1.setState(String.valueOf(BotState.ASK_KOD));
+                replys.setText("Sorry your is not right :" + answer + "\n"  + "Write 'yes'' if you wanna to continue");
+            }
         }
         if (botState.equals(BotState.ASK_NUMBERS)){
             replys.setText((String) appProps.get("reply.askNumbers"));
@@ -81,7 +99,22 @@ public class FillingServiceImpl implements FillingService {
             userTelegram1.setEmail(answer);
         }
         if (botState.equals(BotState.ASK_TOTAL_SUM)){
-            replys.setText((String) appProps.get("reply.askTotal_sum"));
+            UserTelegram telegram = dataCache.getUserProfileData(message.getFrom().getId());
+            Set<Goods> good = goodsService.findById(Long.valueOf(telegram.getKod()));
+            if ( (Long.valueOf(telegram.getNumbers() ) > good.stream().findFirst().get().getPrice() )){
+                String result = String.valueOf( good.stream().findFirst().get().getCount() * good.stream().findFirst().get().getPrice() );
+                replys.setText( appProps.get("reply.askTotal_sum") + "=  " + result + "count = " + good.stream().findFirst().get().getCount());
+                userTelegram1.setState(String.valueOf(BotState.FINISH_PROFILE));
+                userTelegram1.setAddress(answer);
+            }
+            if (  ( Long.valueOf(telegram.getNumbers() ) == 0 )){
+                String result = String.valueOf( 1 * good.stream().findFirst().get().getPrice() );
+                replys.setText( appProps.get("reply.askTotal_sum") + "=  " + result + "count = 1");
+                userTelegram1.setState(String.valueOf(BotState.FINISH_PROFILE));
+                userTelegram1.setAddress(answer);
+            }
+            String result = String.valueOf( Long.valueOf(telegram.getNumbers())  * good.stream().findFirst().get().getPrice() );
+            replys.setText( appProps.get("reply.askTotal_sum") + " Total sum =  " + result + "count = " + telegram.getNumbers());
             userTelegram1.setState(String.valueOf(BotState.FINISH_PROFILE));
             userTelegram1.setAddress(answer);
         }

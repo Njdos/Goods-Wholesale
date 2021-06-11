@@ -5,7 +5,6 @@ public enum BotState {
     ASK_KOD,
     ASK_GOOD,
     ASK_NUMBERS,
-    ASK_PRICE,
     ASK_BIO,
     ASK_PHONE,
     ASK_EMAIL,
