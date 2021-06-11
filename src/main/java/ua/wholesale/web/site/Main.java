@@ -1,7 +1,6 @@
 package ua.wholesale.web.site;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,9 +18,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class Main extends Application {
 
-     public static void main(String[] args) {
+    public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
         launch(args);
+
     }
 
     @Override

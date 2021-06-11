@@ -39,7 +39,6 @@ public class MainController {
         }
         List<Goods> goods = mainControllerService.searchByFilter(filter,heading,pricemin,pricemax);
         List<Long> likeMeList = likeMeService.getListLikeMeIdByUserId(user.getId());
-
         model.addAttribute("messages",goods);
         model.addAttribute("filter", filter);
         model.addAttribute("heading", heading);
