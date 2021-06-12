@@ -8,12 +8,15 @@ import ua.wholesale.web.site.model.Goods;
 import ua.wholesale.web.site.service.GoodsService;
 import ua.wholesale.web.site.telegram.controller.BotBuyGoods;
 import ua.wholesale.web.site.telegram.model.BotState;
+import ua.wholesale.web.site.telegram.model.ProfileUsers;
 import ua.wholesale.web.site.telegram.model.UserTelegram;
 import ua.wholesale.web.site.telegram.service.DataCacheService;
 import ua.wholesale.web.site.telegram.service.FillingService;
+import ua.wholesale.web.site.telegram.service.ProfileUsersService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Set;
 
@@ -28,6 +31,9 @@ public class FillingServiceImpl implements FillingService {
 
     @Autowired
     private BotBuyGoods botBuyGoods;
+
+    @Autowired
+    private ProfileUsersService profileUsersService;
 
     @Override
     public SendMessage getHandler(UserTelegram userTelegram, Message message) {
@@ -45,6 +51,13 @@ public class FillingServiceImpl implements FillingService {
         }
 
         if (botState.equals(BotState.ASK_DESIRE)){
+            if (userTelegram1 != null){
+                dataCache.delete(userTelegram1);
+                userTelegram1 = new UserTelegram();
+                replys.setText((String) appProps.get("reply.askDesire"));
+                userTelegram1.setState(String.valueOf(BotState.ASK_KOD));
+                userTelegram1.setDesire(answer);
+            }
             replys.setText((String) appProps.get("reply.askDesire"));
             userTelegram1.setState(String.valueOf(BotState.ASK_KOD));
             userTelegram1.setDesire(answer);
@@ -114,11 +127,15 @@ public class FillingServiceImpl implements FillingService {
                 userTelegram1.setAddress(answer);
             }
             String result = String.valueOf( Long.valueOf(telegram.getNumbers())  * good.stream().findFirst().get().getPrice() );
-            replys.setText( appProps.get("reply.askTotal_sum") + " Total sum =  " + result + "count = " + telegram.getNumbers());
+            replys.setText( appProps.get("reply.askTotal_sum") + " Total sum =  " + result + " count = " + telegram.getNumbers());
             userTelegram1.setState(String.valueOf(BotState.FINISH_PROFILE));
             userTelegram1.setAddress(answer);
         }
         if (botState.equals(BotState.FINISH_PROFILE) && !message.getText().equals("/finish")) {
+
+            profileUsersService.save(userTelegram1, message.getFrom().getId());
+            dataCache.delete(userTelegram1);
+
             replys.setText("Success");
             if (userTelegram1.getTotal_sum() == null) {
                 userTelegram1.setTotal_sum(answer);
@@ -127,13 +144,21 @@ public class FillingServiceImpl implements FillingService {
             replys.setText("?");
         }
         if (botState.equals(BotState.FINISH_PROFILE) && message.getText().equals("/finish")){
-            replys.setText(userTelegram1.toString());
+
+            ArrayList<ProfileUsers> hashSet = profileUsersService.getByUserid(message.getFrom().getId());
+            if (hashSet!=null){
+                for (ProfileUsers profileUsers : hashSet)
+                    replys.setText(profileUsers.getUserProfile().toString());
+            }
+
+            replys.setText("Sorry you don`t make any orders");
+
         }
 
         userTelegram1.setId(userTelegram.getId());
         userTelegram1.setUserid(userTelegram.getUserid());
-        dataCache.saveUserProfileData(userTelegram1);
 
+        dataCache.save(userTelegram1);
 
         replys.setChatId(String.valueOf(message.getChatId()));
 

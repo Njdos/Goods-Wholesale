@@ -30,6 +30,7 @@ public class BotBuyGoods extends TelegramLongPollingBot {
     private FillingService fillingProfileHandler;
 
 
+
     @PostConstruct
     public void registerBot() throws TelegramApiException {
 
@@ -73,7 +74,7 @@ public class BotBuyGoods extends TelegramLongPollingBot {
                     break;
                 default:
                     UserTelegram userTelegram1 = dataCacheService.getUserProfileData(userId);
-                    if (userTelegram1.getState() != null && userTelegram1.getId() != null){
+                    if (userTelegram1 != null){
                         botState = BotState.valueOf(userTelegram1.getState());
                         userTelegram.setId(userTelegram1.getId());
                         break;
@@ -81,10 +82,12 @@ public class BotBuyGoods extends TelegramLongPollingBot {
                     botState = BotState.ASK_DESIRE;
                     break;
             }
+
             userTelegram.setState(String.valueOf(botState));
             userTelegram.setUserid(userId);
 
-             SendMessage sendMessage = fillingProfileHandler.getHandler(userTelegram, message);
+            SendMessage sendMessage = fillingProfileHandler.getHandler(userTelegram, message);
+
             try {
                 execute(sendMessage);
             } catch (TelegramApiException e) {

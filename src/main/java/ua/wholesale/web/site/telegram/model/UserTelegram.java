@@ -14,7 +14,7 @@ public class UserTelegram {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "userid",unique = true)
+    @Column(name = "userid", unique = true)
     private Long userid;
 
     @Column(name = "state")

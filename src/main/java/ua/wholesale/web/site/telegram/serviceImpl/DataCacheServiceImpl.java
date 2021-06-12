@@ -50,4 +50,14 @@ public class DataCacheServiceImpl implements DataCacheService {
     public void saveUserProfileData(UserTelegram userProfileData) {
         userTelegramRepo.save(userProfileData);
     }
+
+    @Override
+    public void delete(UserTelegram userTelegram) {
+        userTelegramRepo.delete(userTelegram);
+    }
+
+    @Override
+    public void save(UserTelegram userTelegram) {
+        userTelegramRepo.save(userTelegram);
+    }
 }

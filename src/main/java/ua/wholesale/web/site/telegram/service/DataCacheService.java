@@ -15,4 +15,8 @@ public interface DataCacheService {
 
     void saveUserProfileData(UserTelegram userProfileData);
 
+    void delete(UserTelegram userTelegram);
+
+    void save(UserTelegram userTelegram);
+
 }
