@@ -13,12 +13,14 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ua.wholesale.web.site.model.Goods;
 import ua.wholesale.web.site.telegram.model.BotState;
+import ua.wholesale.web.site.telegram.model.ProfileUsers;
 import ua.wholesale.web.site.telegram.model.UserTelegram;
 import ua.wholesale.web.site.telegram.service.DataCacheService;
 import ua.wholesale.web.site.telegram.service.FillingService;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.util.ArrayList;
 
 @Controller
 public class BotBuyGoods extends TelegramLongPollingBot {
@@ -28,8 +30,6 @@ public class BotBuyGoods extends TelegramLongPollingBot {
 
     @Autowired
     private FillingService fillingProfileHandler;
-
-
 
     @PostConstruct
     public void registerBot() throws TelegramApiException {
@@ -41,7 +41,6 @@ public class BotBuyGoods extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public String getBotUsername() {
@@ -73,13 +72,7 @@ public class BotBuyGoods extends TelegramLongPollingBot {
                     botState = BotState.FAILED_FILLING;
                     break;
                 default:
-                    UserTelegram userTelegram1 = dataCacheService.getUserProfileData(userId);
-                    if (userTelegram1 != null){
-                        botState = BotState.valueOf(userTelegram1.getState());
-                        userTelegram.setId(userTelegram1.getId());
-                        break;
-                    }
-                    botState = BotState.ASK_DESIRE;
+                    botState = defaultStage(userId, userTelegram);
                     break;
             }
 
@@ -105,5 +98,33 @@ public class BotBuyGoods extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendProfile(ArrayList<ProfileUsers> arrayList, SendMessage replys, UserTelegram userTelegram1, Long telegramID, Long telegramUserID, String chatID){
+
+        for (ProfileUsers profileUsers : arrayList) {
+            replys.setText(profileUsers.getUserProfile().stream().findFirst().get().toString());
+            userTelegram1.setId(telegramID);
+            userTelegram1.setUserid(telegramUserID);
+            replys.setChatId(chatID);
+
+            try {
+                execute(replys);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private BotState defaultStage(Long userId, UserTelegram userTelegram){
+        BotState botState ;
+        UserTelegram userTelegram1 = dataCacheService.getUserProfileData(userId);
+        if (userTelegram1 != null){
+            botState = BotState.valueOf(userTelegram1.getState());
+            userTelegram.setId(userTelegram1.getId());
+            return botState;
+        }
+        botState = BotState.ASK_DESIRE;
+        return botState;
     }
 }

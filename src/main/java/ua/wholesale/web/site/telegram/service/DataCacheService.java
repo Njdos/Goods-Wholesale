@@ -7,15 +7,9 @@ import ua.wholesale.web.site.telegram.model.UserTelegram;
 @Component
 public interface DataCacheService {
 
-    void setUsersCurrentBotState(UserTelegram userTelegram);
-
-    BotState getUsersCurrentBotState(Long userId);
-
     UserTelegram getUserProfileData(Long userId);
 
-    void saveUserProfileData(UserTelegram userProfileData);
-
-    void delete(UserTelegram userTelegram);
+    void deleteMakeNullUserid(UserTelegram userTelegram);
 
     void save(UserTelegram userTelegram);
 

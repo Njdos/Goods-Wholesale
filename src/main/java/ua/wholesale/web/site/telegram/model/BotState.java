@@ -12,5 +12,4 @@ public enum BotState {
     ASK_TOTAL_SUM,
     FAILED_FILLING,
     FINISH_PROFILE;
-
 }

@@ -18,11 +18,7 @@ public class ProfileUsersServiceImpl implements ProfileUsersService {
     @Override
     public ArrayList<ProfileUsers> getByUserid(Long userId) {
 
-        ArrayList<ProfileUsers> arrayList = null;
-
-        ProfileUsers lists = profileUsersRepo.findByProfileUserId(userId);
-
-        arrayList.add(lists);
+        ArrayList<ProfileUsers> arrayList = profileUsersRepo.findByProfileUserid(userId);
 
         return  arrayList;
     }
@@ -30,15 +26,15 @@ public class ProfileUsersServiceImpl implements ProfileUsersService {
     @Override
     public void save(UserTelegram userTelegram, Long userId) {
 
+        userTelegram.setUserid(userId);
+
         ProfileUsers profileUsers = new ProfileUsers();
 
         ArrayList<UserTelegram> usersArrayList = new ArrayList<>();
-        userTelegram.setUserid(userId);
         usersArrayList.add(userTelegram);
 
-
         profileUsers.setUserProfile(usersArrayList);
-        profileUsers.setProfileUserId(userId);
+        profileUsers.setProfileUserid(userId);
 
         profileUsersRepo.save(profileUsers);
     }

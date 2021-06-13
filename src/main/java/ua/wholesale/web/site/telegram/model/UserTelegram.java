@@ -14,7 +14,7 @@ public class UserTelegram {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "userid", unique = true)
+    @Column(name = "userid")
     private Long userid;
 
     @Column(name = "state")
@@ -49,19 +49,19 @@ public class UserTelegram {
 
     @Override
     public String toString() {
-        return "UserTelegram{" +
-                "id=" + id +
-                ", userid=" + userid +
-                ", state=" + state +
-                ", desire='" + desire + '\'' +
-                ", kod='" + kod + '\'' +
-                ", good='" + good + '\'' +
-                ", numbers=" + numbers +
-                ", bio='" + bio + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                ", total_sum='" + total_sum + '\'' +
+        return "UserTelegram{" +'\n' +
+                "id=" + id +'\n' +
+                " userid=" + userid +'\n' +
+                " state=" + state +'\n' +
+                " desire=" + desire + '\n' +
+                " kod=" + kod + '\n' +
+                " good=" + good + '\n' +
+                " numbers=" + numbers +'\n' +
+                " bio=" + bio + '\n' +
+                " phone=" + phone + '\n' +
+                " email=" + email + '\n' +
+                " address=" + address + '\n' +
+                " total_sum=" + total_sum + '\n' +
                 '}';
     }
 }

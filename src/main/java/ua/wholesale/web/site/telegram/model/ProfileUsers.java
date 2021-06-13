@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 @Data
 @Entity
 @Table(name = "profile_users")
@@ -18,7 +17,8 @@ public class ProfileUsers{
     @Column(name = "id")
     private Long id;
 
-    @ElementCollection(targetClass = UserTelegram.class)
+    @ElementCollection(targetClass = UserTelegram.class,fetch = FetchType.EAGER)
+    @Column(name = "userProfile")
     private List<UserTelegram> userProfile = new ArrayList<>();
 
     @Column(name = "profileUserid")
