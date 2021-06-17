@@ -18,6 +18,7 @@ public class SendSmsController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/sendSms/{messAuthId}")
     public String sendSms(
             @AuthenticationPrincipal User user,
@@ -27,6 +28,8 @@ public class SendSmsController {
         Set<Goods> messages = messAuthId.getGoods();
 
         Iterable<User> users = userService.findById(messAuthId.getId());
+
+
 
         model.addAttribute("countMess", messages.size());
         model.addAttribute("userMess", users);

@@ -72,6 +72,9 @@ public class User implements UserDetails {
     @Column(name = "status")
     private boolean status;
 
+    @Column(name = "activeCode")
+    private String activeCode;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -114,7 +117,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isStatus();
     }
 
     @Override

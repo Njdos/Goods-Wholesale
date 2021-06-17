@@ -12,6 +12,11 @@ import ua.wholesale.web.site.model.Goods;
 import ua.wholesale.web.site.model.User;
 import ua.wholesale.web.site.service.GoodsService;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 @Controller
 @Api("Display ad")
 public class SomeMessageController {

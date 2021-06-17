@@ -47,16 +47,12 @@
             <div class="card-footer text-muted" >
                 <form action="/sendSms" method="get" >
                     <th:block th:each="message : ${messages}">
-                        <a th:href="@{${'/sendSms/'  + message.getAuthor.getId() }}" type="submit">Send Sms To The Author</a>
+                        <a th:href="@{${'/sendSms/'+ message.getAuthor.getId()}}" type="submit">Send Sms To The Author</a>
                     </th:block>
                 </form>
             </div>
             <div class="card-footer text-muted" >
-                <form action="/Buy" method="get">
-                    <th:block th:each="message : ${messages}">
-                        <a th:href="@{${'/Buy/'  + message.getAuthor.getId() + '/' + message.getId()}}" type="submit">Buy</a>
-                    </th:block>
-                </form>
+                        <a th:href="@{https://t.me/flibusta_for_search_bot}" type="submit">Buy Telegram</a>
             </div>
         </div>
     </div>

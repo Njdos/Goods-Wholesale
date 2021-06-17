@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.wholesale.web.site.model.Goods;
 import ua.wholesale.web.site.service.GoodsService;
-import ua.wholesale.web.site.service.MainControllerService;
+import ua.wholesale.web.site.service.MainService;
 
 import java.util.List;
 
 @Service
-public class MainControllerServiceImpl implements MainControllerService {
+public class MainServiceImpl implements MainService {
 
     @Autowired
     private GoodsService goodsService;

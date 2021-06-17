@@ -82,4 +82,17 @@ public class Goods {
         this.author = user;
     }
 
+    @Override
+    public String toString() {
+        return "Goods{" + '\n' +
+                "title= " + title + '\n' +
+                "heading= " + heading + '\n' +
+                "state= " + state + '\n' +
+                "description= " + description + '\n' +
+                "manufacturer= " + manufacturer + '\n' +
+                "count= " + count + '\n' +
+                "price= " + price + '\n' +
+                "place= " + place + '\n' +
+                '}';
+    }
 }

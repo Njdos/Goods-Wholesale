@@ -5,6 +5,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface EmailService {
 
-    void sendSimpleMessage(String email,String subject, String text);
+    void sendSimpleMessage(String email, String activeCode);
 
 }

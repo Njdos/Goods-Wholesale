@@ -3,7 +3,6 @@ package ua.wholesale.web.site.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,22 +15,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ua.wholesale.web.site.model.Goods;
 import ua.wholesale.web.site.model.User;
-import ua.wholesale.web.site.service.AddMessageControllerService;
+import ua.wholesale.web.site.service.AddMessageService;
 import ua.wholesale.web.site.service.GoodsService;
 import ua.wholesale.web.site.utils.validator.GoodsValidator;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
-import java.util.UUID;
 
 @Controller
 @Api(value = "Add ad")
 public class AddMessageController {
 
     @Autowired
-    private AddMessageControllerService addMessageControllerService;
+    private AddMessageService addMessageControllerService;
 
     @Autowired
     private GoodsService goodsService;
@@ -44,6 +40,7 @@ public class AddMessageController {
     public String addget(@AuthenticationPrincipal User user,
                          Model model) {
         model.addAttribute("user", user);
+
         return "addnotice";
     }
 
@@ -66,20 +63,18 @@ public class AddMessageController {
 
         goodsValidator.validate(good, bindingResult);
 
-        if(bindingResult.hasErrors())
-        {
+        if(bindingResult.hasErrors()) {
             goodsValidator.bindingResultErrors(bindingResult, model);
             model.addAttribute("messages", good);
             return "addnotice";
-        } else
-        {
-
-            addMessageControllerService.saveFile1(good, file);
-            addMessageControllerService.saveFile2(good, files);
-            addMessageControllerService.saveFile3(good, filesq);
-            goodsService.save(good);
-
-            return "redirect:/main";
         }
+
+        addMessageControllerService.saveFile1(good, file);
+        addMessageControllerService.saveFile2(good, files);
+        addMessageControllerService.saveFile3(good, filesq);
+        goodsService.save(good);
+
+        return "redirect:/main";
+
     }
 }
