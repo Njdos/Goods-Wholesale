@@ -1,6 +1,6 @@
 package ua.wholesale.web.site.telegram.serviceImpl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.wholesale.web.site.telegram.model.UserTelegram;
 import ua.wholesale.web.site.telegram.repos.UserTelegramRepo;
@@ -8,9 +8,9 @@ import ua.wholesale.web.site.telegram.service.DataCacheService;
 
 
 @Service
+@AllArgsConstructor
 public class DataCacheServiceImpl implements DataCacheService {
 
-    @Autowired
     private UserTelegramRepo userTelegramRepo;
 
     @Override

@@ -1,5 +1,7 @@
 package ua.wholesale.web.site.telegram.serviceImpl;
 
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.wholesale.web.site.telegram.model.ProfileUsers;
@@ -10,9 +12,9 @@ import ua.wholesale.web.site.telegram.service.ProfileUsersService;
 import java.util.ArrayList;
 
 @Service
+@AllArgsConstructor
 public class ProfileUsersServiceImpl implements ProfileUsersService {
 
-    @Autowired
     private ProfileUsersRepo profileUsersRepo;
 
     @Override

@@ -1,6 +1,7 @@
 package ua.wholesale.web.site.telegram.serviceImpl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -21,18 +22,15 @@ import java.util.Properties;
 import java.util.Set;
 
 @Service
+@AllArgsConstructor
 public class FillingServiceImpl implements FillingService {
 
-    @Autowired
     private DataCacheService dataCache;
 
-    @Autowired
     private GoodsService goodsService;
 
-    @Autowired
     private BotBuyGoods botBuyGoods;
 
-    @Autowired
     private ProfileUsersService profileUsersService;
 
     @Override
