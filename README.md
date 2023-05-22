@@ -17,7 +17,7 @@ The ability to make purchases through the Telegram bot, and sellers to place pro
 ## How To Use
 _Below is an example of how start to developing._
 ```
-$ git clone [https://github.com/njdos/JavaFx.git](https://github.com/njdos/Telegram-Bot-and-Spring-MVC)
+$ git clone https://github.com/njdos/Telegram-Bot-and-Spring-MVC
 $ set SDK **1.8** and language level **8**
 $ change `path` to uploaad photos and `DB connection` application.properties
 ```
